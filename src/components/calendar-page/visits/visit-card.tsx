@@ -6,6 +6,7 @@ interface Props {
 }
 
 const VisitCard: React.FunctionComponent<Props> = ({ visit }) => {
+  console.log(visit);
   return (
     <Card
       key={visit.name}
