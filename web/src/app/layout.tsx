@@ -1,5 +1,3 @@
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import { ZIndex } from "@/utils/zIndex";
 import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChairIcon from "@mui/icons-material/Chair";
@@ -17,6 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import * as React from "react";
+import ThemeRegistry from "web/src/components/ThemeRegistry/ThemeRegistry";
+import { ZIndex } from "web/src/utils/zIndex";
 
 export const metadata = {
   title: "Kleopatra - Salon Fryzjerski",
