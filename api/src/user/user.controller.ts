@@ -1,13 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { AppService } from './app.service';
+import { UserService } from './user.service';
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('user')
+export class UserController {
+  constructor(private appService: UserService) {}
 
   @Get()
   async getAllUsers(): Promise<User[]> {
+    console.log('getAllUser ss');
     return await this.appService.getAllUsers();
   }
 }
