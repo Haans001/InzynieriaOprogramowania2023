@@ -15,8 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import * as React from "react";
-import ThemeRegistry from "web/src/components/ThemeRegistry/ThemeRegistry";
-import { ZIndex } from "web/src/utils/zIndex";
+import ThemeRegistry from "src/components/ThemeRegistry/ThemeRegistry";
+import { ZIndex } from "src/utils/zIndex";
 
 export const metadata = {
   title: "Kleopatra - Salon Fryzjerski",

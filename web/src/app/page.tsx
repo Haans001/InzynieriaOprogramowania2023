@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import dayjs, { Dayjs } from "dayjs";
 import * as React from "react";
-import Calendar from "web/src/components/calendar-page/calendar";
-import Visits from "web/src/components/calendar-page/visits";
+import Calendar from "src/components/calendar-page/calendar";
+import Visits from "src/components/calendar-page/visits";
 
 export default function HomePage() {
   const [date, setDate] = React.useState<Dayjs | null>(dayjs());

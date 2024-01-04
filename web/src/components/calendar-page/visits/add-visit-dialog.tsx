@@ -5,8 +5,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
-import FormTextInput from "web/src/components/shared/form/form-text-input";
-import { ZIndex } from "web/src/utils/zIndex";
+import FormTextInput from "src/components/shared/form/form-text-input";
+import { ZIndex } from "src/utils/zIndex";
 
 interface Props {
   open: boolean;
