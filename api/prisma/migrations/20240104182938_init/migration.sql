@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
@@ -14,8 +14,8 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Visit" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
     "time_start" TIMESTAMP(3) NOT NULL,
     "time_end" TIMESTAMP(3) NOT NULL,
     "note" TEXT NOT NULL,
