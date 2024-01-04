@@ -6,7 +6,6 @@ interface Props {
 }
 
 const clientCard: React.FunctionComponent<Props> = ({ client }) => {
-  console.log(client);
   return (
     <Card
       key={client.name}

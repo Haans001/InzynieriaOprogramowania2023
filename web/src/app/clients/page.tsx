@@ -1,22 +1,26 @@
+"use client";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import AddClientForm from "src/components/client-page/add-client-form";
+import Clients from "src/components/client-page/clients";
 
 export default function ClientsPage() {
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="body1" gutterBottom>
-          Klienci
-        </Typography>
-      </Box>
-    </Container>
+    <Box sx={{ display: "flex" }}>
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            borderRight: "1px solid #ccc",
+          }}
+        >
+          <AddClientForm />
+        </Grid>
+        <Grid item xs={6}>
+          <Clients />
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

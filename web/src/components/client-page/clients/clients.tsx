@@ -1,8 +1,7 @@
-import { Button, Stack, Typography } from "@mui/material";
-import { Dayjs } from "dayjs";
+import { Stack, Typography } from "@mui/material";
 import * as React from "react";
-import { Client } from "./types";
 import ClientCard from "./client-card";
+import { Client } from "./types";
 
 const data: Client[] = [
   {
@@ -23,7 +22,6 @@ const data: Client[] = [
 ];
 
 const Clients: React.FunctionComponent = () => {
-
   return (
     <>
       <Typography

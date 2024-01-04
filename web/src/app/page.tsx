@@ -9,8 +9,6 @@ import Visits from "src/components/calendar-page/visits";
 export default function HomePage() {
   const [date, setDate] = React.useState<Dayjs | null>(dayjs());
 
-  console.log(date?.format("YYYY-MM-DD"));
-
   return (
     <Box sx={{ display: "flex" }}>
       <Grid container spacing={2}>
