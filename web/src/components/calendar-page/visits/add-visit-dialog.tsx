@@ -4,8 +4,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Form, Formik } from "formik";
+import FormSelectInput from "src/components/shared/form/form-select-input";
 import FormTextInput from "src/components/shared/form/form-text-input";
+import FormTimePickerInput from "src/components/shared/form/form-time-picker-input";
 import { ZIndex } from "src/utils/zIndex";
 
 interface Props {
@@ -16,112 +20,110 @@ interface Props {
 
 const AddVisitDialog: React.FC<Props> = ({ open, handleClose, date }) => {
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      sx={{
-        zIndex: ZIndex.DIALOG,
-      }}
-    >
-      <DialogTitle>Dodaj wizyte na dzień {date}</DialogTitle>
-      <DialogContent
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Dialog
+        disableEscapeKeyDown
+        open={open}
+        onClose={handleClose}
         sx={{
-          width: "600px",
+          zIndex: ZIndex.DIALOG,
         }}
       >
-        <DialogContentText
+        <DialogTitle>Dodaj wizyte na dzień {date}</DialogTitle>
+        <DialogContent
           sx={{
-            marginBottom: "20px",
+            width: "600px",
           }}
         >
-          Wypełnij poniższe pola aby dodać wizyte
-        </DialogContentText>
-        <Formik
-          onSubmit={console.log}
-          initialValues={{
-            name: "",
-            surname: "",
-            phone: "",
-            email: "",
-            service: "",
-            time_start: "",
-            time_end: "",
-          }}
-        >
-          <Form>
-            <Stack direction="row" spacing={2}>
+          <DialogContentText
+            sx={{
+              marginBottom: "20px",
+            }}
+          >
+            Wypełnij poniższe pola aby dodać wizyte
+          </DialogContentText>
+          <Formik
+            onSubmit={(values) => {
+              console.log(JSON.stringify(values, null, 2));
+            }}
+            initialValues={{
+              time_start: "",
+              time_end: "",
+              note: "",
+              serviceId: null,
+              clientId: null,
+            }}
+          >
+            <Form>
+              <Stack direction="column" spacing={2}>
+                <FormSelectInput
+                  name="serviceId"
+                  label="Usługa"
+                  options={[
+                    {
+                      label: "Strzyżenie",
+                      value: 1,
+                    },
+                    {
+                      label: "Farbowanie",
+                      value: 2,
+                    },
+                  ]}
+                />
+                <FormSelectInput
+                  name="clientId"
+                  label="Klient"
+                  options={[
+                    {
+                      label: "Jan Rapacz",
+                      value: 1,
+                    },
+                    {
+                      label: "Żaneta Hoffman",
+                      value: 2,
+                    },
+                  ]}
+                />
+                <Stack direction="row" spacing={2}>
+                  <FormTimePickerInput
+                    autoFocus
+                    label="Godzina rozpoczęcia"
+                    name="time_start"
+                  />
+                  <FormTimePickerInput
+                    autoFocus
+                    label="Godzina zakończenia"
+                    name="time_end"
+                  />
+                </Stack>
+              </Stack>
               <FormTextInput
                 autoFocus
                 margin="dense"
-                label="Imie"
-                name="name"
-                fullWidth
-              />
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Nazwisko"
+                label="Notatka"
                 type="text"
-                name="surname"
+                name="note"
                 fullWidth
+                multiline
+                rows={2}
+                maxRows={4}
               />
-            </Stack>
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Telefon"
-              type="text"
-              name="phone"
-              fullWidth
-            />
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Email"
-              type="email"
-              name="email"
-              fullWidth
-            />
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Usługa"
-              type="text"
-              name="service"
-              fullWidth
-            />
-            <Stack direction="row" spacing={2}>
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Godzina rozpoczęcia"
-                type="text"
-                name="time_start"
-                fullWidth
-              />
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Godzina zakończenia"
-                type="text"
-                name="time_end"
-                fullWidth
-              />
-            </Stack>
-            <DialogActions
-              sx={{
-                marginTop: "20px",
-              }}
-            >
-              <Button onClick={handleClose} type="button">
-                Odrzuć
-              </Button>
-              <Button type="submit">Dodaj wizyte</Button>
-            </DialogActions>
-          </Form>
-        </Formik>
-      </DialogContent>
-    </Dialog>
+
+              <DialogActions
+                sx={{
+                  marginTop: "20px",
+                }}
+              >
+                <Button onClick={handleClose} type="button">
+                  Odrzuć
+                </Button>
+                <Button type="submit">Dodaj wizyte</Button>
+              </DialogActions>
+            </Form>
+          </Formik>
+        </DialogContent>
+      </Dialog>
+    </LocalizationProvider>
   );
 };
 
