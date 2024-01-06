@@ -6,6 +6,7 @@ interface Props {
 }
 
 const clientCard: React.FunctionComponent<Props> = ({ client }) => {
+  console.log(client);
   return (
     <Card
       key={client.name}
@@ -22,6 +23,9 @@ const clientCard: React.FunctionComponent<Props> = ({ client }) => {
       </Typography>
       <Typography variant="body1" component="p">
         {client.email}
+      </Typography>
+      <Typography variant="body1" component="p">
+        {client.address}
       </Typography>
     </Card>
   );
