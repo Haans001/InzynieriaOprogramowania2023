@@ -25,6 +25,11 @@ export class VisitController {
     return this.visitService.findAll();
   }
 
+  @Get('day/:day')
+  findForDay(@Param('day') day: string) {
+    return this.visitService.findForDay(day);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.visitService.findOne(+id);

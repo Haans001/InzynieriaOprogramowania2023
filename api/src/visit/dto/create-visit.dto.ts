@@ -11,5 +11,5 @@ export class CreateVisitDto {
   time_end: string;
 
   @IsInt()
-  user_id: number;
+  client_id: number;
 }
