@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   OutlinedInput,
   Select,
@@ -22,6 +23,7 @@ const FormSelectInput: React.FunctionComponent<Props & SelectProps> = ({
   ...props
 }) => {
   const [field, meta] = useField(name);
+  const hasError = meta.touched && Boolean(meta.error);
   return (
     <FormControl fullWidth>
       <InputLabel id={`${name}-label`}>{label}</InputLabel>
@@ -35,6 +37,7 @@ const FormSelectInput: React.FunctionComponent<Props & SelectProps> = ({
         onChange={field.onChange}
         onBlur={field.onBlur}
         error={meta.touched && Boolean(meta.error)}
+        slotProps={{}}
         input={<OutlinedInput label={label} id={`${name}-label`} />}
       >
         <option aria-label="None" value="" />
@@ -44,6 +47,15 @@ const FormSelectInput: React.FunctionComponent<Props & SelectProps> = ({
           </option>
         ))}
       </Select>
+      {hasError && (
+        <FormHelperText
+          sx={{
+            color: "#d32f2f",
+          }}
+        >
+          {meta.error}
+        </FormHelperText>
+      )}
     </FormControl>
   );
 };

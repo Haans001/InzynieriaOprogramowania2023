@@ -13,7 +13,23 @@ export class VisitService {
         note: createVisitDto.note,
         time_start: createVisitDto.time_start,
         time_end: createVisitDto.time_end,
-        userId: createVisitDto.user_id,
+        userId: createVisitDto.client_id,
+      },
+    });
+  }
+
+  async findForDay(day: string) {
+    console.log(day);
+    console.log(new Date(`${day}T00:00:00Z`).toISOString());
+    return await this.prisma.visit.findMany({
+      where: {
+        time_start: {
+          gte: new Date(`${day}T00:00:00Z`),
+          lt: new Date(`${day}T23:59:59Z`),
+        },
+      },
+      include: {
+        user: true,
       },
     });
   }
@@ -26,8 +42,18 @@ export class VisitService {
     return `This action returns a #${id} visit`;
   }
 
-  update(id: number, updateVisitDto: UpdateVisitDto) {
-    return `This action updates a #${id} visit`;
+  async update(id: number, updateVisitDto: UpdateVisitDto) {
+    return await this.prisma.visit.update({
+      where: {
+        id: id,
+      },
+      data: {
+        note: updateVisitDto.note,
+        time_start: updateVisitDto.time_start,
+        time_end: updateVisitDto.time_end,
+        userId: updateVisitDto.client_id,
+      },
+    });
   }
 
   remove(id: number) {
