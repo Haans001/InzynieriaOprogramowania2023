@@ -30,6 +30,7 @@ const LINKS = [
   { text: "Kalendarz wizyt", href: "/", icon: CalendarMonthIcon },
   { text: "Klienci", href: "/clients", icon: ChairIcon },
   { text: "Fryzjerzy", href: "/employees", icon: BadgeIcon },
+  { text: "Usługi", href: "/services", icon: DashboardIcon},
 ];
 
 export default function RootLayout({
