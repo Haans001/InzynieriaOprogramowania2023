@@ -20,11 +20,6 @@ export class VisitController {
     return this.visitService.create(createVisitDto);
   }
 
-  @Get()
-  findAll() {
-    return this.visitService.findAll();
-  }
-
   @Get('day/:day')
   findForDay(@Param('day') day: string) {
     return this.visitService.findForDay(day);
