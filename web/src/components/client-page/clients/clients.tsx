@@ -1,27 +1,32 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
+import { Dayjs } from "dayjs";
 import * as React from "react";
-import ClientCard from "./client-card";
 import { Client } from "./types";
+import ClientCard from "./client-card";
 
 const data: Client[] = [
   {
     name: "Jan Kowalski",
     phone: "123456789",
     email: "jan.kowalski@gmail.com",
+    address: "Maj 10, 12-345 Burak"
   },
   {
     name: "Anna Nowak",
     phone: "634123001",
     email: "anna.nowak@polsl.pl",
+    address: "Maj 10, 12-345 Burak"
   },
   {
     name: "Jan Gajda",
     phone: "562100985",
     email: "jan.gajda@outlook.com",
+    address: "Maj 10, 12-345 Burak"
   },
 ];
 
 const Clients: React.FunctionComponent = () => {
+
   return (
     <>
       <Typography
