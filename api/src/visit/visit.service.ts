@@ -34,10 +34,6 @@ export class VisitService {
     });
   }
 
-  findAll() {
-    return `This action returns all visit`;
-  }
-
   findOne(id: number) {
     return `This action returns a #${id} visit`;
   }
