@@ -36,7 +36,12 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
         onSubmit={async (values, helpers) => {
           await addClient({
             ...values,
-            address: "Komoranów 7/23",
+            address: [
+              values.city,
+              values.street,
+              values.flatNumber,
+              values.postcode,
+            ].join(", "),
           });
           helpers.resetForm();
         }}
@@ -46,6 +51,10 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
           last_name: "",
           phone: "",
           email: "",
+          street: "",
+          flatNumber: "",
+          postcode: "",
+          city: "",
         }}
       >
         <Form>
@@ -82,7 +91,13 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
             name="email"
             fullWidth
           />
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              marginTop: "20px",
+            }}
+          >
             <FormTextInput
               autoFocus
               margin="dense"
@@ -100,7 +115,13 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
               fullWidth
             />
           </Stack>
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              marginTop: "20px",
+            }}
+          >
             <FormTextInput
               autoFocus
               margin="dense"
@@ -118,16 +139,19 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
               fullWidth
             />
           </Stack>
-          <Button type="reset">Odrzuć</Button>
-          <Button
-            variant="contained"
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems={"center"}
             sx={{
               marginTop: "20px",
             }}
-            type="submit"
           >
-            Dodaj klienta
-          </Button>
+            <Button type="reset">Odrzuć</Button>
+            <Button variant="contained" type="submit">
+              Dodaj klienta
+            </Button>
+          </Stack>
         </Form>
       </Formik>
     </>

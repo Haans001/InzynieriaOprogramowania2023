@@ -7,7 +7,6 @@ interface Props {
 }
 
 const clientCard: React.FunctionComponent<Props> = ({ client }) => {
-  console.log(client);
   return (
     <Link
       href={`clients/profile/${client.id}`}
@@ -30,6 +29,9 @@ const clientCard: React.FunctionComponent<Props> = ({ client }) => {
         </Typography>
         <Typography variant="body1" component="p">
           {client.email}
+        </Typography>
+        <Typography variant="body1" component="p">
+          {client.address}
         </Typography>
       </Card>
     </Link>
