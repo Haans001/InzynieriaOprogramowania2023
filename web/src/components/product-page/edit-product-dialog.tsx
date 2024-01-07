@@ -7,15 +7,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
-import { Service } from "./types";
+import { Product } from "./types";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
-  service: Service;
+  product: Product;
 }
 
-const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
+const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
   return (
     <Dialog
       open={open}
@@ -24,7 +24,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
         zIndex: ZIndex.DIALOG,
       }}
     >
-      <DialogTitle>Edycja usługi</DialogTitle>
+      <DialogTitle>Edycja produktu</DialogTitle>
       <DialogContent
         sx={{
           width: "600px",
@@ -40,38 +40,36 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
         <Formik
           onSubmit={console.log}
           initialValues={{
-            name: service.name,
-            time: service.time,
-            price: service.price,
+            name: product.name,
+            amount: product.amount,
+            description: product.description,
           }}
         >
           <Form>
             <FormTextInput
               autoFocus
               margin="dense"
-              label="Nazwa usługi"
+              label="Nazwa produktu"
               type="text"
               name="name"
               fullWidth
             />
-            <Stack direction="row" spacing={2}>
             <FormTextInput
               autoFocus
               margin="dense"
-              label="Czas trwania (w minutach)"
-              type="text"
-              name="time"
+              label="Ilość"
+              type="number"
+              name="amount"
               fullWidth
             />
             <FormTextInput
               autoFocus
               margin="dense"
-              label="Cena (w PLN)"
+              label="Opis"
               type="text"
-              name="price"
+              name="description"
               fullWidth
             />
-            </Stack>
             <DialogActions
               sx={{
                 marginTop: "20px",
@@ -80,7 +78,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
               <Button onClick={handleClose} type="button">
                 Odrzuć
               </Button>
-              <Button type="submit">Edytuj usługę</Button>
+              <Button type="submit">Edytuj produkt</Button>
             </DialogActions>
           </Form>
         </Formik>
@@ -89,4 +87,4 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
   );
 };
 
-export default AddServiceDialog;
+export default EditProductDialog;

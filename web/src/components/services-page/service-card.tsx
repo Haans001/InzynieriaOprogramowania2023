@@ -1,6 +1,6 @@
 import { Card, Typography } from "@mui/material";
 import { Service } from "./types";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 import * as React from "react";
 import EditServiceDialog from "./edit-service-dialog";
 
@@ -10,6 +10,7 @@ interface Props {
 
 const ServiceCard: React.FunctionComponent<Props> = ({ service }) => {
   const [editServiceDialogOpen, setEditServiceDialogOpen] = React.useState(false);
+  const [selectedService, setSelectedService] = React.useState(service);
   console.log(service);
   return (
     <>
@@ -33,7 +34,7 @@ const ServiceCard: React.FunctionComponent<Props> = ({ service }) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => setEditServiceDialogOpen(true)}
+        onClick={() => {setSelectedService(service); setEditServiceDialogOpen(true)}}
       >
         Edytuj usługę
       </Button>
@@ -41,6 +42,7 @@ const ServiceCard: React.FunctionComponent<Props> = ({ service }) => {
     <EditServiceDialog
     open={editServiceDialogOpen}
     handleClose={() => setEditServiceDialogOpen(false)}
+    service={selectedService}
     />
     </>
   );
