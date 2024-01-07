@@ -12,17 +12,15 @@ const Clients: React.FunctionComponent = () => {
 
   return (
     <>
-      <Typography
-        variant="h5"
-        component="h5"
-        fontWeight={700}
-        sx={{
-          marginBottom: "40px",
-        }}
-      >
+      <Typography variant="h5" component="h5" fontWeight={700}>
         Lista klientów
       </Typography>
-      <Stack>
+      <Typography>Kliknij na klienta, aby zobaczyć jego profil.</Typography>
+      <Stack
+        sx={{
+          marginTop: "20px",
+        }}
+      >
         {clients?.map((client) => (
           <ClientCard client={client} />
         ))}

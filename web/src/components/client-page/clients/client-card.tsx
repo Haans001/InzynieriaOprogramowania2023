@@ -1,4 +1,5 @@
 import { Card, Typography } from "@mui/material";
+import Link from "next/link";
 import { Client } from "src/api/client";
 
 interface Props {
@@ -8,26 +9,30 @@ interface Props {
 const clientCard: React.FunctionComponent<Props> = ({ client }) => {
   console.log(client);
   return (
-    <Card
-      key={client.id}
-      sx={{
-        padding: "20px",
-        marginBottom: "20px",
+    <Link
+      href={`clients/profile/${client.id}`}
+      style={{
+        textDecoration: "none",
       }}
     >
-      <Typography variant="h6" component="h6" fontWeight={700}>
-        {client.first_name} {client.last_name}
-      </Typography>
-      <Typography variant="body1" component="p">
-        {client.phone}
-      </Typography>
-      <Typography variant="body1" component="p">
-        {client.email}
-      </Typography>
-      <Typography variant="body1" component="p">
-        {client.address}
-      </Typography>
-    </Card>
+      <Card
+        key={client.id}
+        sx={{
+          padding: "20px",
+          marginBottom: "20px",
+        }}
+      >
+        <Typography variant="h6" component="h6" fontWeight={700}>
+          {client.first_name} {client.last_name}
+        </Typography>
+        <Typography variant="body1" component="p">
+          {client.phone}
+        </Typography>
+        <Typography variant="body1" component="p">
+          {client.email}
+        </Typography>
+      </Card>
+    </Link>
   );
 };
 export default clientCard;
