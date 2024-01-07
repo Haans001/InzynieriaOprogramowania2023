@@ -31,6 +31,7 @@ const LINKS = [
   { text: "Klienci", href: "/clients", icon: ChairIcon },
   { text: "Fryzjerzy", href: "/employees", icon: BadgeIcon },
   { text: "Usługi", href: "/services", icon: DashboardIcon},
+  { text: "Magazyn", href: "/products", icon: DashboardIcon},
 ];
 
 export default function RootLayout({
