@@ -10,22 +10,22 @@ const data: Service[] = [
   {
     name: "Strzyżenie męskie",
     time: "30",
-    price: "50"
+    price: "50",
   },
   {
     name: "Strzyżenie damskie",
     time: "40",
-    price: "60"
+    price: "60",
   },
   {
     name: "Farbowanie krótkich włosów",
     time: "60",
-    price: "100"
+    price: "100",
   },
   {
     name: "Farbowanie długich włosów",
     time: "90",
-    price: "150"
+    price: "150",
   },
 ];
 
