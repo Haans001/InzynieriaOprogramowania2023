@@ -75,7 +75,7 @@ const VisitFormDialog: React.FC<Props> = ({
             {description}
           </DialogContentText>
           <Formik
-            validationSchema={validationSchema(visits ?? [])}
+            validationSchema={validationSchema(visits ?? [], date)}
             onSubmit={onSubmit}
             initialValues={getInitialValues(visit ?? ({} as Visit))}
           >

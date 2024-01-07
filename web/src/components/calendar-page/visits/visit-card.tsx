@@ -46,6 +46,8 @@ const VisitCard: React.FunctionComponent<Props> = ({
     setEditVisitDialogOpen(false);
   };
 
+  const isVisitDone = new Date(visit.time_end) < new Date();
+
   return (
     <Card
       sx={{
@@ -69,24 +71,26 @@ const VisitCard: React.FunctionComponent<Props> = ({
       <Typography variant="body1" component="p">
         {visit.user.email}
       </Typography>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{
-          marginTop: "20px",
-        }}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setEditVisitDialogOpen(true)}
+      {!isVisitDone ? (
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            marginTop: "20px",
+          }}
         >
-          Edytuj
-        </Button>
-        <Button variant="contained" color="error">
-          Usuń
-        </Button>
-      </Stack>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setEditVisitDialogOpen(true)}
+          >
+            Edytuj
+          </Button>
+          <Button variant="contained" color="error">
+            Usuń
+          </Button>
+        </Stack>
+      ) : null}
       <VisitFormDialog
         date={date}
         open={editVisitDialogOpen}

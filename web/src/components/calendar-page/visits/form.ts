@@ -14,7 +14,7 @@ function isOverlap(newStartTime: string, newEndTime: string, visits: Visit[]) {
   );
 }
 
-export const validationSchema = (visits: Visit[]) =>
+export const validationSchema = (visits: Visit[], day: string) =>
   Yup.object({
     time_start: Yup.string()
       .required("Pole wymagane")
@@ -22,8 +22,8 @@ export const validationSchema = (visits: Visit[]) =>
         "start-greater-than-now",
         "Czas rozpoczęcia musi być późniejszy niż obecny czas",
         function (value) {
-          const currentTime = new Date();
-          return !value || new Date(value) > currentTime;
+          const { visitTimeStart } = getVisitHours(day, value, value);
+          return !value || new Date() < visitTimeStart;
         },
       ),
     time_end: Yup.string()
@@ -33,7 +33,6 @@ export const validationSchema = (visits: Visit[]) =>
         "Czas zakończenia musi być późniejszy niż czas rozpoczęcia",
         function (value) {
           const { time_start } = this.parent;
-          console.log(time_start, value);
           return (
             !time_start || !value || new Date(time_start) < new Date(value)
           );
@@ -44,7 +43,6 @@ export const validationSchema = (visits: Visit[]) =>
         "Wizyta nie może nakładać się z inną wizytą",
         function (value) {
           const { time_start } = this.parent;
-          console.log(isOverlap(time_start, value, visits));
           return !isOverlap(time_start, value, visits);
         },
       ),
