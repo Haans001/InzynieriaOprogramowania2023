@@ -23,8 +23,13 @@ export class ClientService {
     return await this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
+  async findOne(id: number) {
+    return await this.prisma.user.findUnique({
+      where: { id: id },
+      include: {
+        Visit: true,
+      },
+    });
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {

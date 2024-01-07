@@ -6,8 +6,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Form, Formik } from "formik";
+import { _getAllClients } from "src/api/client";
 import { Visit } from "src/api/visits";
 import FormSelectInput from "src/components/shared/form/form-select-input";
 import FormTextInput from "src/components/shared/form/form-text-input";
@@ -38,6 +40,17 @@ const VisitFormDialog: React.FC<Props> = ({
   description,
   submitButtonLabel,
 }) => {
+  const { data: clients } = useQuery({
+    queryKey: ["clients"],
+    queryFn: () => _getAllClients(),
+  });
+
+  const selectClientOptions =
+    clients?.map((client) => ({
+      label: `${client.first_name} ${client.last_name}`,
+      value: client.id,
+    })) ?? [];
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog
@@ -85,16 +98,7 @@ const VisitFormDialog: React.FC<Props> = ({
                 <FormSelectInput
                   name="client_id"
                   label="Klient"
-                  options={[
-                    {
-                      label: "Jan Rapacz",
-                      value: 1,
-                    },
-                    {
-                      label: "Żaneta Hoffman",
-                      value: 2,
-                    },
-                  ]}
+                  options={selectClientOptions}
                 />
                 <Stack direction="row" spacing={2}>
                   <FormTimePickerInput

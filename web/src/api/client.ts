@@ -1,4 +1,5 @@
 import api from "src/config/axios";
+import { Visit } from "./visits";
 
 export interface AddClientPayload {
   first_name: string;
@@ -27,4 +28,13 @@ export const _addClient = async (values: AddClientPayload) => {
 export const _getAllClients = async () => {
   const response = await api.get("/client");
   return response.data as Client[];
+};
+
+interface GetClientData extends Client {
+  Visit: Visit[];
+}
+
+export const _getClient = async (id: number) => {
+  const response = await api.get(`/client/${id}`);
+  return response.data as GetClientData;
 };
