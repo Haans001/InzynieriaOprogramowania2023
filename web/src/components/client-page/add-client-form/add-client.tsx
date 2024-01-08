@@ -1,3 +1,4 @@
+import FormTextInput from "src/components/shared/form/form-text-input";
 import { Button, Stack, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
@@ -29,7 +30,7 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
         sx={{
           marginBottom: "40px",
         }}
-      >
+        >
         Wypełnij formularz, aby dodać klienta
       </Typography>
       <Formik
