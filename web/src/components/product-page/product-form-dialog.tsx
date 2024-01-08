@@ -1,5 +1,6 @@
 import FormTextInput from "src/components/shared/form/form-text-input";
 import { ZIndex } from "src/utils/zIndex";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Stack } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,15 +8,30 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
-import { Product } from "./types";
+import { Product } from "src/api/products";
+import { getInitialValues, validationSchema } from "./form";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
-  product: Product;
+  products: Product[];
+  product?: Product;
+  onSubmit: (values: any) => Promise<void>;
+  title: string;
+  description: string;
+  submitButtonLabel: string;
 }
 
-const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
+const ProductFormDialog: React.FC<Props> = ({ 
+  open, 
+  handleClose,
+  onSubmit,
+  products,
+  product,
+  title,
+  description,
+  submitButtonLabel,
+}) => {
   return (
     <Dialog
       open={open}
@@ -24,7 +40,7 @@ const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
         zIndex: ZIndex.DIALOG,
       }}
     >
-      <DialogTitle>Edycja produktu</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent
         sx={{
           width: "600px",
@@ -35,15 +51,12 @@ const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
             marginBottom: "20px",
           }}
         >
-          Zmień wybrane pola
+          {description}
         </DialogContentText>
         <Formik
-          onSubmit={console.log}
-          initialValues={{
-            name: product.name,
-            amount: product.amount,
-            description: product.description,
-          }}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          initialValues={getInitialValues(product ?? ({} as Product))}
         >
           <Form>
             <FormTextInput
@@ -69,6 +82,9 @@ const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
               type="text"
               name="description"
               fullWidth
+              multiline
+              rows={2}
+              maxRows={4}
             />
             <DialogActions
               sx={{
@@ -78,7 +94,7 @@ const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
               <Button onClick={handleClose} type="button">
                 Odrzuć
               </Button>
-              <Button type="submit">Edytuj produkt</Button>
+              <Button type="submit">{submitButtonLabel}</Button>
             </DialogActions>
           </Form>
         </Formik>
@@ -87,4 +103,4 @@ const EditProductDialog: React.FC<Props> = ({ open, handleClose, product }) => {
   );
 };
 
-export default EditProductDialog;
+export default ProductFormDialog;

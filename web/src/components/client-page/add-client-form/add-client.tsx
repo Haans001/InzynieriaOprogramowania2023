@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import * as React from "react";
 import { AddClientPayload, _addClient } from "src/api/client";
-import FormTextInput from "src/components/shared/form/form-text-input";
 import { validationSchema } from "./form";
 
 interface Props {}

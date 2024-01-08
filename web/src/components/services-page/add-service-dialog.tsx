@@ -7,6 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
+import { validationSchema } from "./form"
 
 interface Props {
   open: boolean;
@@ -37,6 +38,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
         </DialogContentText>
         <Formik
           onSubmit={console.log}
+          validationSchema={validationSchema}
           initialValues={{
             name: "",
             time: "",
