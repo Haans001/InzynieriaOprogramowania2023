@@ -1,5 +1,3 @@
-import FormTextInput from "src/components/shared/form/form-text-input";
-import { ZIndex } from "src/utils/zIndex";
 import { Button, Stack } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,7 +5,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
-import { Service } from "./types";
+import FormTextInput from "src/components/shared/form/form-text-input";
+import { ZIndex } from "src/utils/zIndex";
+import { validationSchema } from "./form";
 
 interface Props {
   open: boolean;
@@ -38,6 +38,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
           Zmień wybrane pola
         </DialogContentText>
         <Formik
+          validationSchema={validationSchema}
           onSubmit={console.log}
           initialValues={{
             name: service.name,
@@ -55,22 +56,22 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose, service }) => {
               fullWidth
             />
             <Stack direction="row" spacing={2}>
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Czas trwania (w minutach)"
-              type="text"
-              name="time"
-              fullWidth
-            />
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Cena (w PLN)"
-              type="text"
-              name="price"
-              fullWidth
-            />
+              <FormTextInput
+                autoFocus
+                margin="dense"
+                label="Czas trwania (w minutach)"
+                type="text"
+                name="time"
+                fullWidth
+              />
+              <FormTextInput
+                autoFocus
+                margin="dense"
+                label="Cena (w PLN)"
+                type="text"
+                name="price"
+                fullWidth
+              />
             </Stack>
             <DialogActions
               sx={{

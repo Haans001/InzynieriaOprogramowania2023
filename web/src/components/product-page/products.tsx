@@ -1,36 +1,39 @@
 "use client";
 import { Button, Stack, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import AddProductDialog from "./add-product-dialog";
+import {
+  UpsertProductPayload,
+  _addProduct,
+  _getAllProducts,
+} from "src/api/products";
+import ProductFormDialog from "./product-form-dialog";
 import ProductCard from "./product-card";
-import { Product } from "./types";
-
-
-const data: Product[] = [
-  {
-    name: "Nożyczki",
-    amount: 3,
-    description: "",
-  },
-  {
-    name: "Grzebień",
-    amount: 5,
-    description: "",
-  },
-  {
-    name: "Farba czarna",
-    amount: 4,
-    description: "",
-  },
-  {
-    name: "Rozjaśniacz",
-    amount: 1,
-    description: "Rozjaśniacz Loreal 100 ml",
-  },
-];
 
 const Products: React.FunctionComponent = () => {
-  const [addProductDialogOpen, setAddProductDialogOpen] = React.useState(false);
+  const [addProductFormDialogOpen, setAddProductFormDialogOpen] = React.useState(false);
+
+  const { data: products, refetch } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => _getAllProducts(),
+  });
+
+  const { mutateAsync: addProduct } = useMutation({
+    mutationFn: (product: UpsertProductPayload) => _addProduct(product),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const handleSubmit = async (values: any) => {
+    await addProduct({
+      name: values.name,
+      amount: values.amount,
+      description: values.description,
+    });
+
+    setAddProductFormDialogOpen(false);
+  };
 
   return (
     <>
@@ -45,20 +48,30 @@ const Products: React.FunctionComponent = () => {
         Lista zasobów
       </Typography>
       <Stack>
-        {data.map((product) => (
-          <ProductCard product={product} />
+        {products?.map((product) => (
+          <ProductCard 
+            key={product.id}
+            product={product}
+            allProducts={products ?? []}
+            refetch={refetch}
+          />
         ))}
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setAddProductDialogOpen(true)}
+          onClick={() => setAddProductFormDialogOpen(true)}
         >
-          Dodaj zasób
+          Dodaj produkt
         </Button>
       </Stack>
-      <AddProductDialog
-        open={addProductDialogOpen}
-        handleClose={() => setAddProductDialogOpen(false)}
+      <ProductFormDialog
+        products={products ?? []}
+        onSubmit={handleSubmit}
+        open={addProductFormDialogOpen}
+        handleClose={() => setAddProductFormDialogOpen(false)}
+        title="Dodawanie produktu"
+        description="Wypełnij formularz aby dodać produkt"
+        submitButtonLabel="Dodaj produkt"
       />
     </>
   );
