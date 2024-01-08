@@ -1,22 +1,45 @@
 import { Card, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { Button, Stack } from "@mui/material";
 import * as React from "react";
+import { UpsertProductPayload, Product, _updateProduct } from "src/api/products";
 import FormTextInput from "src/components/shared/form/form-text-input";
 import { Form, Formik } from "formik";
-import { Product } from "./types";
-import EditProductDialog from "./edit-product-dialog"
+import ProductFormDialog from "./product-form-dialog";
+
 interface Props {
     product: Product;
+    allProducts: Product[];
+    refetch: () => Promise<unknown>;
 }
 
-const ProductCard: React.FunctionComponent<Props> = ({ product }) => {
-  const [editProductDialogOpen, setEditProductDialogOpen] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState(product);
-  console.log(product);
+const ProductCard: React.FunctionComponent<Props> = ({ 
+  product,
+  allProducts,
+  refetch, 
+}) => {
+  const [editProductDialogOpen, setEditProductDialogOpen] = React.useState<boolean>(false);
+
+  const { mutateAsync: updateProduct } = useMutation({
+    mutationFn: (values: UpsertProductPayload) => _updateProduct(values, product.id),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const handleSubmit = async (values: any) => {
+    await updateProduct({
+      name: values.name,
+      amount: values.amount,
+      description: values.description,
+    });
+
+    setEditProductDialogOpen(false);
+  };
+
   return (
     <>
     <Card
-      key={product.name}
       sx={{
         padding: "20px",
         marginBottom: "20px",
@@ -49,19 +72,24 @@ const ProductCard: React.FunctionComponent<Props> = ({ product }) => {
               <Button
               variant="contained"
               color="primary"
-              onClick={() => {setSelectedProduct(product); setEditProductDialogOpen(true)}}
+              onClick={() => {setEditProductDialogOpen(true)}}
               >
-                Edytuj produkt
+                Edytuj
               </Button>
           </Form>
         </Formik>
       </Typography>
     </Card>
-    <EditProductDialog
-    open={editProductDialogOpen}
-    handleClose={() => {setEditProductDialogOpen(false)}}
-    product={selectedProduct}
-    />
+    <ProductFormDialog
+        open={editProductDialogOpen}
+        handleClose={() => setEditProductDialogOpen(false)}
+        product={product}
+        products={allProducts}
+        onSubmit={handleSubmit}
+        title="Edytuj produkt"
+        description="Wypełnij formularz aby edytować produkt"
+        submitButtonLabel="Zapisz"
+      />
     </>
   );
 };
