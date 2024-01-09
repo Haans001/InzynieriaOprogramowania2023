@@ -14,6 +14,7 @@ export class VisitService {
         time_start: createVisitDto.time_start,
         time_end: createVisitDto.time_end,
         userId: createVisitDto.client_id,
+        serviceId: createVisitDto.service_id,
       },
     });
   }
@@ -30,6 +31,7 @@ export class VisitService {
       },
       include: {
         user: true,
+        service: true,
       },
     });
   }

@@ -2,12 +2,31 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import dayjs, { Dayjs } from "dayjs";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import Calendar from "src/components/calendar-page/calendar";
 import Visits from "src/components/calendar-page/visits";
 
 export default function HomePage() {
-  const [date, setDate] = React.useState<Dayjs | null>(dayjs());
+  const searchParams = useSearchParams();
+
+  const [date, setDate] = React.useState<Dayjs | null>(
+    dayjs(searchParams.get("date")),
+  );
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleDateChange = (date: Dayjs | null) => {
+    const params = new URLSearchParams({
+      date: date?.toISOString() || "",
+    });
+
+    const url = `${pathname}?${params.toString()}`;
+
+    router.push(url);
+
+    setDate(date);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -19,7 +38,7 @@ export default function HomePage() {
             borderRight: "1px solid #ccc",
           }}
         >
-          <Calendar date={date} setDate={setDate} />
+          <Calendar date={date} setDate={handleDateChange} />
         </Grid>
         <Grid item xs={6}>
           <Visits date={date} />

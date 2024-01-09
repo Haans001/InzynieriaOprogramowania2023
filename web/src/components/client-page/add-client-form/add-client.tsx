@@ -60,14 +60,12 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
         <Form>
           <Stack direction="row" spacing={2}>
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Imie"
               name="first_name"
               fullWidth
             />
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Nazwisko"
               type="text"
@@ -76,7 +74,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
             />
           </Stack>
           <FormTextInput
-            autoFocus
             margin="dense"
             label="Telefon"
             type="text"
@@ -84,7 +81,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
             fullWidth
           />
           <FormTextInput
-            autoFocus
             margin="dense"
             label="Email"
             type="email"
@@ -99,7 +95,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
             }}
           >
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Ulica"
               type="text"
@@ -107,7 +102,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
               fullWidth
             />
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Numer budynku"
               type="text"
@@ -123,7 +117,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
             }}
           >
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Kod pocztowy"
               type="text"
@@ -131,7 +124,6 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
               fullWidth
             />
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Miejscowość"
               type="text"

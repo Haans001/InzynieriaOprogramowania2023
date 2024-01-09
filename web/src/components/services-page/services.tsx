@@ -1,19 +1,32 @@
 "use client";
-import { Button, Stack, TableContainer, Typography, Table, TableCell, TableRow, TableHead, TableBody } from "@mui/material";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import ServiceFormDialog from "./service-form-dialog";
 import {
   UpsertServicePayload,
   _addService,
   _getAllServices,
 } from "src/api/services";
+import ServiceFormDialog from "./service-form-dialog";
 import ServiceRow from "./service-row";
 
 const Services: React.FunctionComponent = () => {
   const [addServiceDialogOpen, setAddServiceDialogOpen] = React.useState(false);
 
-  const { data: services, refetch } = useQuery({
+  const {
+    data: services,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["services"],
     queryFn: () => _getAllServices(),
   });
@@ -28,13 +41,18 @@ const Services: React.FunctionComponent = () => {
   const handleSubmit = async (values: any) => {
     await addService({
       name: values.name,
-      time: values.time,
-      price: values.price,
-      description: values.description,
+      time: parseInt(values.time),
+      price: parseInt(values.price),
     });
 
     setAddServiceDialogOpen(false);
   };
+
+  const servicesCount = services?.length ?? 0;
+
+  if (isLoading) {
+    return <Typography>Ładowanie...</Typography>;
+  }
 
   return (
     <>
@@ -48,29 +66,32 @@ const Services: React.FunctionComponent = () => {
       >
         Cennik usług
       </Typography>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nazwa usługi</TableCell>
-              <TableCell align="right">Czas wykonania</TableCell>
-              <TableCell align="right">Cena</TableCell>
-              <TableCell align="right">Edycja</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {services?.map((service) => (
-          <ServiceRow 
-            key={service.id}
-            service={service} 
-            allServices={services ?? []}
-            refetch={refetch}
-          />
-        ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
+      {servicesCount > 0 ? (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Nazwa usługi</TableCell>
+                <TableCell align="right">Czas wykonania</TableCell>
+                <TableCell align="right">Cena</TableCell>
+                <TableCell align="right">Edycja</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {services?.map((service) => (
+                <ServiceRow
+                  key={service.id}
+                  service={service}
+                  allServices={services ?? []}
+                  refetch={refetch}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography>Brak dodanych usług</Typography>
+      )}
       <Button
         variant="contained"
         color="primary"
