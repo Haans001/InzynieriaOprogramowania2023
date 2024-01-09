@@ -4,7 +4,6 @@ import * as React from "react";
 import { UpsertProductPayload, Product, _updateProduct } from "src/api/products";
 import ProductFormDialog from "./product-form-dialog";
 import { VscEdit } from "react-icons/vsc";
-import FormTextInput from "src/components/shared/form/form-text-input";
 
 interface Props {
     product: Product;

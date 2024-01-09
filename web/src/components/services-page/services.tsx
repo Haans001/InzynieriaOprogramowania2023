@@ -1,36 +1,40 @@
 "use client";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, TableContainer, Typography, Table, TableCell, TableRow, TableHead, TableBody } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import AddServiceDialog from "./add-service-dialog";
-import { Service } from "./types";
-import ServiceCard from "./service-card";
-
-
-const data: Service[] = [
-  {
-    name: "Strzyżenie męskie",
-    time: "30",
-    price: "50",
-  },
-  {
-    name: "Strzyżenie damskie",
-    time: "40",
-    price: "60",
-  },
-  {
-    name: "Farbowanie krótkich włosów",
-    time: "60",
-    price: "100",
-  },
-  {
-    name: "Farbowanie długich włosów",
-    time: "90",
-    price: "150",
-  },
-];
+import ServiceFormDialog from "./service-form-dialog";
+import {
+  UpsertServicePayload,
+  _addService,
+  _getAllServices,
+} from "src/api/services";
+import ServiceRow from "./service-row";
 
 const Services: React.FunctionComponent = () => {
   const [addServiceDialogOpen, setAddServiceDialogOpen] = React.useState(false);
+
+  const { data: services, refetch } = useQuery({
+    queryKey: ["services"],
+    queryFn: () => _getAllServices(),
+  });
+
+  const { mutateAsync: addService } = useMutation({
+    mutationFn: (service: UpsertServicePayload) => _addService(service),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const handleSubmit = async (values: any) => {
+    await addService({
+      name: values.name,
+      time: values.time,
+      price: values.price,
+      description: values.description,
+    });
+
+    setAddServiceDialogOpen(false);
+  };
 
   return (
     <>
@@ -44,21 +48,47 @@ const Services: React.FunctionComponent = () => {
       >
         Cennik usług
       </Typography>
-      <Stack>
-        {data.map((service) => (
-          <ServiceCard service={service} />
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nazwa usługi</TableCell>
+              <TableCell align="right">Czas wykonania</TableCell>
+              <TableCell align="right">Cena</TableCell>
+              <TableCell align="right">Edycja</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {services?.map((service) => (
+          <ServiceRow 
+            key={service.id}
+            service={service} 
+            allServices={services ?? []}
+            refetch={refetch}
+          />
         ))}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setAddServiceDialogOpen(true)}
-        >
-          Dodaj usługę
-        </Button>
-      </Stack>
-      <AddServiceDialog
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setAddServiceDialogOpen(true)}
+        sx={{
+          marginTop: "20px",
+        }}
+      >
+        Dodaj usługę
+      </Button>
+      <ServiceFormDialog
+        services={services ?? []}
+        onSubmit={handleSubmit}
         open={addServiceDialogOpen}
         handleClose={() => setAddServiceDialogOpen(false)}
+        title="Dodawanie usługi"
+        description="Wypełnij formularz aby dodać usługę"
+        submitButtonLabel="Dodaj usługę"
       />
     </>
   );
