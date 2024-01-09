@@ -14,6 +14,8 @@ export interface Product{
 }
 
 export const _getAllProducts = async () => {
+  //const response = await api.get("/products");
+  //return response.data as Product[];
   const products: Product[] = [
     {
       id: 1,
@@ -40,8 +42,6 @@ export const _getAllProducts = async () => {
       description: "Rozjaśniacz Loreal 100 ml",
     },
   ];
-  //const response = await api.get("/products");
-  //return response.data as Product[];
   const response = products;
   return response;
 };
