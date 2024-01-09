@@ -1,5 +1,3 @@
-import FormTextInput from "src/components/shared/form/form-text-input";
-import { ZIndex } from "src/utils/zIndex";
 import { Button, Stack } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,7 +6,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
 import { Service } from "src/api/services";
-import { validationSchema, getInitialValues } from "./form"
+import FormTextInput from "src/components/shared/form/form-text-input";
+import { ZIndex } from "src/utils/zIndex";
+import { getInitialValues, validationSchema } from "./form";
 
 interface Props {
   open: boolean;
@@ -21,7 +21,7 @@ interface Props {
   submitButtonLabel: string;
 }
 
-const ServiceFormDialog: React.FC<Props> = ({ 
+const ServiceFormDialog: React.FC<Props> = ({
   open,
   handleClose,
   services,
@@ -67,22 +67,22 @@ const ServiceFormDialog: React.FC<Props> = ({
               fullWidth
             />
             <Stack direction="row" spacing={2}>
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Czas trwania (w minutach)"
-              type="text"
-              name="time"
-              fullWidth
-            />
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Cena (w PLN)"
-              type="text"
-              name="price"
-              fullWidth
-            />
+              <FormTextInput
+                autoFocus
+                margin="dense"
+                label="Czas trwania (w minutach)"
+                type="text"
+                name="time"
+                fullWidth
+              />
+              <FormTextInput
+                autoFocus
+                margin="dense"
+                label="Cena (w PLN)"
+                type="text"
+                name="price"
+                fullWidth
+              />
             </Stack>
             <FormTextInput
               autoFocus
