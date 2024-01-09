@@ -43,7 +43,16 @@ const Products: React.FunctionComponent = () => {
 
   return (
     <>
-      <Typography variant="h5" component="h5">Magazyn</Typography>
+      <Typography 
+        variant="h5"
+        component="h5"
+        fontWeight={700}
+        sx={{
+          marginBottom: "40px",
+        }}
+      >
+        Magazyn
+      </Typography>
       <TableContainer>
         <Table
         sx={{minWidth: "600px"}} aria-label="lista-produktów" title="Magazyn"
