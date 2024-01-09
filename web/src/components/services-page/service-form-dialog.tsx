@@ -7,14 +7,30 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
-import { validationSchema } from "./form"
+import { Service } from "src/api/services";
+import { validationSchema, getInitialValues } from "./form"
 
 interface Props {
   open: boolean;
   handleClose: () => void;
+  services: Service[];
+  service?: Service;
+  onSubmit: (values: any) => Promise<void>;
+  title: string;
+  description: string;
+  submitButtonLabel: string;
 }
 
-const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
+const ServiceFormDialog: React.FC<Props> = ({ 
+  open,
+  handleClose,
+  services,
+  service,
+  onSubmit,
+  title,
+  description,
+  submitButtonLabel,
+}) => {
   return (
     <Dialog
       open={open}
@@ -23,7 +39,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
         zIndex: ZIndex.DIALOG,
       }}
     >
-      <DialogTitle>Dodaj usługę</DialogTitle>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent
         sx={{
           width: "600px",
@@ -34,16 +50,12 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
             marginBottom: "20px",
           }}
         >
-          Wypełnij poniższe pola aby dodać usługę
+          {description}
         </DialogContentText>
         <Formik
-          onSubmit={console.log}
+          onSubmit={onSubmit}
           validationSchema={validationSchema}
-          initialValues={{
-            name: "",
-            time: "",
-            price: "",
-          }}
+          initialValues={getInitialValues(service ?? ({} as Service))}
         >
           <Form>
             <FormTextInput
@@ -72,6 +84,17 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
               fullWidth
             />
             </Stack>
+            <FormTextInput
+              autoFocus
+              margin="dense"
+              label="Opis usługi"
+              type="text"
+              name="description"
+              fullWidth
+              multiline
+              rows={2}
+              maxRows={4}
+            />
             <DialogActions
               sx={{
                 marginTop: "20px",
@@ -80,7 +103,7 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
               <Button onClick={handleClose} type="button">
                 Odrzuć
               </Button>
-              <Button type="submit">Dodaj usługę</Button>
+              <Button type="submit">{submitButtonLabel}</Button>
             </DialogActions>
           </Form>
         </Formik>
@@ -89,4 +112,4 @@ const AddServiceDialog: React.FC<Props> = ({ open, handleClose }) => {
   );
 };
 
-export default AddServiceDialog;
+export default ServiceFormDialog;

@@ -1,5 +1,5 @@
 "use client";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, TableFooter, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import Table from '@mui/material/Table';
@@ -41,25 +41,18 @@ const Products: React.FunctionComponent = () => {
     setAddProductFormDialogOpen(false);
   };
 
-  function createData(
-    name: string,
-    amount: number
-  ){
-    return { name, amount}
-  }
-
   return (
     <>
-      <Typography>Magazyn</Typography>
+      <Typography variant="h5" component="h5">Magazyn</Typography>
       <TableContainer>
         <Table
-        sx={{minWidth: 650}} aria-label="lista-produktów" title="Magazyn"
+        sx={{minWidth: "600px"}} aria-label="lista-produktów" title="Magazyn"
         >
           <TableHead>
             <TableRow>
-              <TableCell>Nazwa</TableCell>
+              <TableCell>Nazwa produktu</TableCell>
               <TableCell align="right">Ilość</TableCell>
-              <TableCell align="right">Edytuj</TableCell>
+              <TableCell align="right">Edycja</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,13 +67,17 @@ const Products: React.FunctionComponent = () => {
           </TableBody>
         </Table>
       </TableContainer>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setAddProductFormDialogOpen(true)}
-        >
-          Dodaj produkt
-        </Button>
+      <Button
+            sx={{
+              marginTop: "20px",
+            }}
+            variant="contained"
+            color="primary"
+            onClick={() => setAddProductFormDialogOpen(true)}
+            >
+              Dodaj produkt
+            </Button>
+        
 
       <ProductFormDialog
         products={products ?? []}
