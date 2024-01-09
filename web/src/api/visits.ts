@@ -1,11 +1,13 @@
 import api from "src/config/axios";
 import { Client } from "./client";
+import { Service } from "./services";
 
 export interface UpsertVisitPayload {
   time_start: string;
   time_end: string;
   note: string;
-  client_id: string;
+  client_id: number;
+  service_id: number;
 }
 
 export interface Visit {
@@ -16,13 +18,11 @@ export interface Visit {
   createdAt: string;
   updatedAt: string;
   user: Client;
+  service: Service;
 }
 
 export const _addVisit = async (visit: UpsertVisitPayload) => {
-  const response = await api.post("/visit", {
-    ...visit,
-    client_id: parseInt(visit.client_id),
-  });
+  const response = await api.post("/visit", visit);
   return response.data;
 };
 
@@ -32,9 +32,6 @@ export const _getVisitsForDay = async (day: string) => {
 };
 
 export const _updateVisit = async (visit: UpsertVisitPayload, id: number) => {
-  const response = await api.patch(`/visit/${id}`, {
-    ...visit,
-    client_id: parseInt(visit.client_id),
-  });
+  const response = await api.patch(`/visit/${id}`, visit);
   return response.data;
 };

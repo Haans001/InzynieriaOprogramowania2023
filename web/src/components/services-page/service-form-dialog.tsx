@@ -59,7 +59,6 @@ const ServiceFormDialog: React.FC<Props> = ({
         >
           <Form>
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Nazwa usługi"
               type="text"
@@ -68,7 +67,6 @@ const ServiceFormDialog: React.FC<Props> = ({
             />
             <Stack direction="row" spacing={2}>
               <FormTextInput
-                autoFocus
                 margin="dense"
                 label="Czas trwania (w minutach)"
                 type="text"
@@ -76,7 +74,6 @@ const ServiceFormDialog: React.FC<Props> = ({
                 fullWidth
               />
               <FormTextInput
-                autoFocus
                 margin="dense"
                 label="Cena (w PLN)"
                 type="text"
@@ -84,17 +81,6 @@ const ServiceFormDialog: React.FC<Props> = ({
                 fullWidth
               />
             </Stack>
-            <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Opis usługi"
-              type="text"
-              name="description"
-              fullWidth
-              multiline
-              rows={2}
-              maxRows={4}
-            />
             <DialogActions
               sx={{
                 marginTop: "20px",

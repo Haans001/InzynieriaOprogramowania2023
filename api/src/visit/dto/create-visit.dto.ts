@@ -12,4 +12,7 @@ export class CreateVisitDto {
 
   @IsInt()
   client_id: number;
+
+  @IsInt()
+  service_id: number;
 }

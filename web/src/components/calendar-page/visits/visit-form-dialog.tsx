@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Form, Formik } from "formik";
 import { _getAllClients } from "src/api/client";
+import { _getAllServices } from "src/api/services";
 import { Visit } from "src/api/visits";
 import FormSelectInput from "src/components/shared/form/form-select-input";
 import FormTextInput from "src/components/shared/form/form-text-input";
@@ -45,10 +46,21 @@ const VisitFormDialog: React.FC<Props> = ({
     queryFn: () => _getAllClients(),
   });
 
+  const { data: services } = useQuery({
+    queryKey: ["services"],
+    queryFn: () => _getAllServices(),
+  });
+
   const selectClientOptions =
     clients?.map((client) => ({
       label: `${client.first_name} ${client.last_name}`,
       value: client.id,
+    })) ?? [];
+
+  const selectServiceOptions =
+    services?.map((service) => ({
+      label: `${service.name}`,
+      value: service.id,
     })) ?? [];
 
   return (
@@ -84,16 +96,7 @@ const VisitFormDialog: React.FC<Props> = ({
                 <FormSelectInput
                   name="service_id"
                   label="Usługa"
-                  options={[
-                    {
-                      label: "Strzyżenie",
-                      value: 1,
-                    },
-                    {
-                      label: "Farbowanie",
-                      value: 2,
-                    },
-                  ]}
+                  options={selectServiceOptions}
                 />
                 <FormSelectInput
                   name="client_id"

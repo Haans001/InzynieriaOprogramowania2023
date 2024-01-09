@@ -42,10 +42,11 @@ const Visits: React.FunctionComponent<Props> = ({ date }) => {
     );
 
     await addVisit({
-      client_id: values.client_id,
       note: values.note,
       time_end: visitTimeEnd.toISOString(),
       time_start: visitTimeStart.toISOString(),
+      service_id: parseInt(values.service_id),
+      client_id: parseInt(values.client_id),
     });
 
     setAddVisitDialogOpen(false);
