@@ -20,7 +20,11 @@ const Products: React.FunctionComponent = () => {
   const [addProductFormDialogOpen, setAddProductFormDialogOpen] =
     React.useState(false);
 
-  const { data: products, refetch } = useQuery({
+  const {
+    data: products,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: () => _getAllProducts(),
   });
@@ -42,6 +46,12 @@ const Products: React.FunctionComponent = () => {
     setAddProductFormDialogOpen(false);
   };
 
+  const productsCount = products?.length ?? 0;
+
+  if (isLoading) {
+    return <Typography>Ładowanie...</Typography>;
+  }
+
   return (
     <>
       <Typography
@@ -54,38 +64,42 @@ const Products: React.FunctionComponent = () => {
       >
         Magazyn
       </Typography>
-      <TableContainer>
-        <Table
-          sx={{ minWidth: "600px" }}
-          aria-label="lista-produktów"
-          title="Magazyn"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Nazwa produktu</TableCell>
-              <TableCell align="right">Ilość</TableCell>
-              <TableCell align="right">Edycja</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products?.map((product) => (
-              <ProductRow
-                key={product.id}
-                product={product}
-                allProducts={products ?? []}
-                refetch={refetch}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {productsCount > 0 ? (
+        <TableContainer>
+          <Table
+            sx={{ minWidth: "600px" }}
+            aria-label="lista-produktów"
+            title="Magazyn"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Nazwa produktu</TableCell>
+                <TableCell align="right">Ilość</TableCell>
+                <TableCell align="right">Edycja</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products?.map((product) => (
+                <ProductRow
+                  key={product.id}
+                  product={product}
+                  allProducts={products ?? []}
+                  refetch={refetch}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography>Brak dodanych produktów</Typography>
+      )}
       <Button
-        sx={{
-          marginTop: "20px",
-        }}
         variant="contained"
         color="primary"
         onClick={() => setAddProductFormDialogOpen(true)}
+        sx={{
+          marginTop: "20px",
+        }}
       >
         Dodaj produkt
       </Button>
