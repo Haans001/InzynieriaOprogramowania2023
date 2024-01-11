@@ -36,13 +36,14 @@ model Visit {
 }
 
 model Service {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  time      Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Visit     Visit[]
+  id         Int      @id @default(autoincrement())
+  name       String
+  price      Int
+  time       Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  is_removed Boolean  @default(false)
+  Visit      Visit[]
 }
 
 model Product {

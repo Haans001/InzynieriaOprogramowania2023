@@ -4,7 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
-import { UpsertVisitPayload, Visit, _updateVisit } from "src/api/visits";
+import {
+  UpsertVisitPayload,
+  Visit,
+  _deleteVisit,
+  _updateVisit,
+} from "src/api/visits";
+import DeleteModal from "src/components/shared/delete-dialog";
 import { getVisitHours } from "./form";
 import VisitFormDialog from "./visit-form-dialog";
 interface Props {
@@ -23,8 +29,18 @@ const VisitCard: React.FunctionComponent<Props> = ({
   const [editVisitDialogOpen, setEditVisitDialogOpen] =
     useState<boolean>(false);
 
+  const [deleteVisitDialogOpen, setDeleteVisitDialogOpen] =
+    useState<boolean>(false);
+
   const { mutateAsync: updateVisit } = useMutation({
     mutationFn: (values: UpsertVisitPayload) => _updateVisit(values, visit.id),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const { mutateAsync: deleteVisit } = useMutation({
+    mutationFn: () => _deleteVisit(visit.id),
     onSuccess: () => {
       refetch();
     },
@@ -50,6 +66,8 @@ const VisitCard: React.FunctionComponent<Props> = ({
 
   const isVisitDone = new Date(visit.time_end) < new Date();
 
+  const fullName = `${visit.user.first_name} ${visit.user.last_name}`;
+
   return (
     <Card
       sx={{
@@ -60,7 +78,7 @@ const VisitCard: React.FunctionComponent<Props> = ({
       <Link href={`clients/profile/${visit.user.id}`}>
         <Stack direction="row" alignItems={"center"}>
           <Typography variant="h6" component="h6" fontWeight={700}>
-            {visit.user.first_name} {visit.user.last_name}
+            {fullName}
           </Typography>
           <LaunchIcon />
         </Stack>
@@ -96,7 +114,11 @@ const VisitCard: React.FunctionComponent<Props> = ({
           >
             Edytuj
           </Button>
-          <Button variant="contained" color="error">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setDeleteVisitDialogOpen(true)}
+          >
             Usuń
           </Button>
         </Stack>
@@ -111,6 +133,15 @@ const VisitCard: React.FunctionComponent<Props> = ({
         title="Edytuj wizytę"
         description="Wypełnij formularz aby edytować wizytę"
         submitButtonLabel="Zapisz"
+      />
+      <DeleteModal
+        title="Usuń Wizytę"
+        description={`Czy napewno chcesz usunąć wizytę dla ${fullName} dnia ${date} o godzinie ${dayjs(
+          visit.time_start,
+        ).format("HH:mm")}?`}
+        open={deleteVisitDialogOpen}
+        onClose={() => setDeleteVisitDialogOpen(false)}
+        onConfirm={() => deleteVisit()}
       />
     </Card>
   );

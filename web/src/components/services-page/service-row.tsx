@@ -5,8 +5,10 @@ import { VscEdit } from "react-icons/vsc";
 import {
   Service,
   UpsertServicePayload,
+  _deleteService,
   _updateService,
 } from "src/api/services";
+import DeleteModal from "../shared/delete-dialog";
 import ServiceFormDialog from "./service-form-dialog";
 
 interface Props {
@@ -23,9 +25,19 @@ const ServiceRow: React.FunctionComponent<Props> = ({
   const [editServiceFormDialogOpen, setEditServiceFormDialogOpen] =
     React.useState(false);
 
+  const [deleteServiceDialogOpen, setDeleteServiceDialogOpen] =
+    React.useState(false);
+
   const { mutateAsync: updateService } = useMutation({
     mutationFn: (values: UpsertServicePayload) =>
       _updateService(values, service.id),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const { mutateAsync: deleteService } = useMutation({
+    mutationFn: () => _deleteService(service.id),
     onSuccess: () => {
       refetch();
     },
@@ -46,11 +58,8 @@ const ServiceRow: React.FunctionComponent<Props> = ({
         <TableCell component="th" scope="row">
           {service.name}
         </TableCell>
-
         <TableCell align="right">{`${service.time} min`}</TableCell>
-
         <TableCell align="right">{`${service.price} zł`}</TableCell>
-
         <TableCell align="right">
           <Button
             color="secondary"
@@ -59,6 +68,14 @@ const ServiceRow: React.FunctionComponent<Props> = ({
             }}
           >
             <VscEdit />
+          </Button>
+        </TableCell>
+        <TableCell align="right">
+          <Button
+            color="error"
+            onClick={() => setDeleteServiceDialogOpen(true)}
+          >
+            Usuń usługę
           </Button>
         </TableCell>
       </TableRow>
@@ -71,6 +88,13 @@ const ServiceRow: React.FunctionComponent<Props> = ({
         title="Edytuj usługę"
         description="Zmień wybrane pola aby edytować produkt"
         submitButtonLabel="Zapisz"
+      />
+      <DeleteModal
+        onConfirm={() => deleteService()}
+        title="Usuń usługe"
+        description={`Czy napewno chcesz usunąć ${service.name} z cennika usług?`}
+        open={deleteServiceDialogOpen}
+        onClose={() => setDeleteServiceDialogOpen(false)}
       />
     </>
   );

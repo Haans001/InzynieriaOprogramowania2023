@@ -35,3 +35,8 @@ export const _updateVisit = async (visit: UpsertVisitPayload, id: number) => {
   const response = await api.patch(`/visit/${id}`, visit);
   return response.data;
 };
+
+export const _deleteVisit = async (id: number) => {
+  const response = await api.delete(`/visit/${id}`);
+  return response.data;
+};

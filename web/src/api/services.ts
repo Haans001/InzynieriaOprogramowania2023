@@ -19,9 +19,7 @@ export const _getAllServices = async () => {
 };
 
 export const _addService = async (service: UpsertServicePayload) => {
-  const response = await api.post("/service", {
-    ...service,
-  });
+  const response = await api.post("/service", service);
   return response.data;
 };
 
@@ -29,8 +27,11 @@ export const _updateService = async (
   service: UpsertServicePayload,
   id: number,
 ) => {
-  const response = await api.patch(`/service/${id}`, {
-    ...service,
-  });
+  const response = await api.patch(`/service/${id}`, service);
+  return response.data;
+};
+
+export const _deleteService = async (id: number) => {
+  const response = await api.delete(`/service/${id}`);
   return response.data;
 };

@@ -75,6 +75,7 @@ const Services: React.FunctionComponent = () => {
                 <TableCell align="right">Czas wykonania</TableCell>
                 <TableCell align="right">Cena</TableCell>
                 <TableCell align="right">Edycja</TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

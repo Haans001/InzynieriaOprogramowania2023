@@ -18,7 +18,11 @@ export class ServiceService {
   }
 
   async findAll() {
-    return await this.prisma.service.findMany();
+    return await this.prisma.service.findMany({
+      where: {
+        is_removed: false,
+      },
+    });
   }
 
   findOne(id: number) {
@@ -38,7 +42,14 @@ export class ServiceService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
+  async remove(id: number) {
+    return this.prisma.service.update({
+      where: {
+        id: id,
+      },
+      data: {
+        is_removed: true,
+      },
+    });
   }
 }
