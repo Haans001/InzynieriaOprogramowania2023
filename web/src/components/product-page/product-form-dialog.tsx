@@ -1,7 +1,4 @@
-import FormTextInput from "src/components/shared/form/form-text-input";
-import { ZIndex } from "src/utils/zIndex";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,6 +6,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Form, Formik } from "formik";
 import { Product } from "src/api/products";
+import FormTextInput from "src/components/shared/form/form-text-input";
+import { ZIndex } from "src/utils/zIndex";
 import { getInitialValues, validationSchema } from "./form";
 
 interface Props {
@@ -22,11 +21,10 @@ interface Props {
   submitButtonLabel: string;
 }
 
-const ProductFormDialog: React.FC<Props> = ({ 
-  open, 
+const ProductFormDialog: React.FC<Props> = ({
+  open,
   handleClose,
   onSubmit,
-  products,
   product,
   title,
   description,
@@ -60,7 +58,6 @@ const ProductFormDialog: React.FC<Props> = ({
         >
           <Form>
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Nazwa produktu"
               type="text"
@@ -68,7 +65,6 @@ const ProductFormDialog: React.FC<Props> = ({
               fullWidth
             />
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Ilość"
               type="number"
@@ -76,7 +72,6 @@ const ProductFormDialog: React.FC<Props> = ({
               fullWidth
             />
             <FormTextInput
-              autoFocus
               margin="dense"
               label="Opis"
               type="text"

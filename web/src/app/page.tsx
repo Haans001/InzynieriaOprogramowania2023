@@ -10,9 +10,9 @@ import Visits from "src/components/calendar-page/visits";
 export default function HomePage() {
   const searchParams = useSearchParams();
 
-  const [date, setDate] = React.useState<Dayjs | null>(
-    dayjs(searchParams.get("date")),
-  );
+  const defaultDate = searchParams.get("date") ?? undefined;
+
+  const [date, setDate] = React.useState<Dayjs | null>(dayjs(defaultDate));
   const router = useRouter();
   const pathname = usePathname();
 
