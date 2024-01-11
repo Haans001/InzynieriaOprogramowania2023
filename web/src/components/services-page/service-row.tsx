@@ -69,7 +69,7 @@ const ServiceRow: React.FunctionComponent<Props> = ({
         service={service}
         onSubmit={handleSubmit}
         title="Edytuj usługę"
-        description="Zmień wybrane pola aby edytować produkt"
+        description="Zmień wybrane pola aby edytować usługę"
         submitButtonLabel="Zapisz"
       />
     </>

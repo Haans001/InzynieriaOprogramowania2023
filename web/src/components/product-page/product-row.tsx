@@ -1,5 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, TableRow, TableCell } from "@mui/material";
+import { 
+  Button,
+  TableCell, 
+  TableRow 
+} from "@mui/material";
 import * as React from "react";
 import { UpsertProductPayload, Product, _updateProduct } from "src/api/products";
 import ProductFormDialog from "./product-form-dialog";
@@ -11,11 +15,12 @@ interface Props {
     refetch: () => Promise<unknown>;
 }
 
-const ProductRow: React.FunctionComponent<Props> = ({ 
-  product,
-  allProducts,
-  refetch, 
-}) => {
+const ProductRow: 
+  React.FunctionComponent<Props> = ({ 
+    product,
+    allProducts,
+    refetch, 
+  }) => {
   const [editProductDialogOpen, setEditProductDialogOpen] = React.useState<boolean>(false);
 
   const { mutateAsync: updateProduct } = useMutation({

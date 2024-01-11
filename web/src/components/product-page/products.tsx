@@ -1,13 +1,16 @@
 "use client";
-import { Button, Stack, TableFooter, Typography } from "@mui/material";
+import { 
+  Button, 
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography 
+} from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import {
   UpsertProductPayload,
   _addProduct,
@@ -19,7 +22,11 @@ import ProductRow from "./product-row";
 const Products: React.FunctionComponent = () => {
   const [addProductFormDialogOpen, setAddProductFormDialogOpen] = React.useState(false);
 
-  const { data: products, refetch } = useQuery({
+  const { 
+    data: products, 
+    refetch, 
+    isLoading, 
+  } = useQuery({
     queryKey: ["products"],
     queryFn: () => _getAllProducts(),
   });
@@ -34,12 +41,18 @@ const Products: React.FunctionComponent = () => {
   const handleSubmit = async (values: any) => {
     await addProduct({
       name: values.name,
-      amount: values.amount,
+      amount: parseInt(values.amount),
       description: values.description,
     });
 
     setAddProductFormDialogOpen(false);
   };
+
+  const productsCount = products?.length ?? 0;
+
+  if (isLoading) {
+    return <Typography>Ładowanie...</Typography>;
+  }
 
   return (
     <>
@@ -53,41 +66,42 @@ const Products: React.FunctionComponent = () => {
       >
         Magazyn
       </Typography>
-      <TableContainer>
-        <Table
-        sx={{minWidth: "600px"}} aria-label="lista-produktów" title="Magazyn"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Nazwa produktu</TableCell>
-              <TableCell align="right">Ilość</TableCell>
-              <TableCell align="right">Edycja</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-              {products?.map((product) => (
-              <ProductRow
-                key={product.id}
-                product={product}
-                allProducts={products ?? []}
-                refetch={refetch}
-              />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {productsCount > 0 ? (
+        <TableContainer>
+          <Table
+          sx={{minWidth: "600px"}} aria-label="lista-produktów" title="Magazyn"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Nazwa produktu</TableCell>
+                <TableCell align="right">Ilość</TableCell>
+                <TableCell align="right">Edycja</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+                {products?.map((product) => (
+                <ProductRow
+                  key={product.id}
+                  product={product}
+                  allProducts={products ?? []}
+                  refetch={refetch}
+                />
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>) : (
+          <Typography>Brak dodanych produktów</Typography>
+        )}
       <Button
-            sx={{
-              marginTop: "20px",
-            }}
-            variant="contained"
-            color="primary"
-            onClick={() => setAddProductFormDialogOpen(true)}
-            >
-              Dodaj produkt
-            </Button>
-        
-
+        variant="contained"
+        color="primary"
+        onClick={() => setAddProductFormDialogOpen(true)}
+        sx={{
+          marginTop: "20px",
+        }}
+        >
+          Dodaj produkt
+        </Button>
       <ProductFormDialog
         products={products ?? []}
         onSubmit={handleSubmit}
