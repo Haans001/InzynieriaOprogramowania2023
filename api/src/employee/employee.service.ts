@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from 'src/auth/role.enum';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
@@ -9,11 +10,13 @@ export class EmployeeService {
       id: 1,
       username: 'john',
       password: 'changeme',
+      role: Role.Admin,
     },
     {
       id: 2,
       username: 'maria',
       password: 'guess',
+      role: Role.Employee,
     },
   ];
 
