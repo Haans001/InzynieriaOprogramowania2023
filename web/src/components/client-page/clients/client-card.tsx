@@ -10,7 +10,7 @@ const clientCard: React.FunctionComponent<Props> = ({ client }) => {
   console.log(client);
   return (
     <Link
-      href={`dashboard/clients/profile/${client.id}`}
+      href={`clients/profile/${client.id}`}
       style={{
         textDecoration: "none",
       }}

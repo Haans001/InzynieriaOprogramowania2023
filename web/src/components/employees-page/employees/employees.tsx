@@ -26,16 +26,16 @@ const Employees: React.FunctionComponent = () => {
   const [addEmployeeFormDialogOpen, setAddEmployeeFormDialogOpen] =
     React.useState<boolean>(false);
 
-  if (isLoading) {
-    return <Typography>Ładowanie...</Typography>;
-  }
-
   const { mutateAsync: addEmployee } = useMutation({
     mutationFn: (values: UpsertEmployeePayload) => _addEmployee(values),
     onSuccess: () => {
       refetch();
     },
   });
+
+  if (isLoading) {
+    return <Typography>Ładowanie...</Typography>;
+  }
 
   return (
     <>
