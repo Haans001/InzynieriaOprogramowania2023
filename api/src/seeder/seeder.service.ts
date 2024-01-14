@@ -14,6 +14,7 @@ export class SeederService {
       password: 'admin',
       username: 'admin',
       role: 'ADMIN',
+      about: 'Admin',
     });
 
     console.log('Seed completed');

@@ -6,6 +6,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { EmployeeService } from 'src/employee/employee.service';
 import { AuthService } from './auth.service';
 import { AdminRoute } from './decorators/admin-route.decorator';
 import { Public } from './decorators/is-public.decorator';
@@ -14,7 +15,10 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly employeeService: EmployeeService,
+  ) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
@@ -24,8 +28,9 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  async getProfile(@Request() req) {
+    console.log('req.user: ', req.user);
+    return await this.employeeService.findOne(req.user.userId);
   }
 
   @AdminRoute()

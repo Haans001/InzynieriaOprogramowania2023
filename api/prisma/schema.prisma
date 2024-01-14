@@ -70,6 +70,8 @@ model Employee {
   username        String
   hashed_password String
   role            Role     @default(EMPLOYEE)
+  about           String?
+  is_removed      Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   Visit           Visit[]

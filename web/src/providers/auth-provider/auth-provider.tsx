@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 import { _getProfile, _login } from "src/api/auth";
-import { AuthContext } from "./auth-context";
+import { AuthContext, AuthContextType } from "./auth-context";
 
 const TOKEN_KEY = "token";
 
@@ -41,18 +41,24 @@ const AuthProvider: React.FunctionComponent<{
     return localStorage.getItem(TOKEN_KEY) || null;
   };
 
+  const logout = () => {
+    localStorage.removeItem(TOKEN_KEY);
+    push("/login");
+  };
+
+  const contextValue: AuthContextType = {
+    employee: data || null,
+    login: async (username: string, password: string) =>
+      await login({ username, password }),
+    logout,
+    getToken,
+    isAdmin: data?.role === "ADMIN",
+  };
+
   if (!isLoading && !data && !isLoginPage) {
     push("/login");
     return null;
   }
-
-  const contextValue = {
-    employee: data || null,
-    login: async (username: string, password: string) =>
-      await login({ username, password }),
-    logout: () => {},
-    getToken,
-  };
 
   return (
     <AuthContext.Provider value={contextValue}>

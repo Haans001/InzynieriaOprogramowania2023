@@ -1,12 +1,10 @@
 import { Button, Card, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import * as React from "react";
-import { 
-  Employee,
-  UpsertEmployeePayload,
-  _updateEmployee,
-} from "src/api/employee";
-import EmployeeFormDialog from "./employee-form-dialog";
+import { Employee } from "src/api/auth";
+import { _deleteEmployee } from "src/api/employee";
+import DeleteModal from "src/components/shared/delete-dialog";
+import { useAuth } from "src/providers/auth-provider";
 
 interface Props {
   employee: Employee;
@@ -14,33 +12,21 @@ interface Props {
   refetch: () => Promise<unknown>;
 }
 
-const EmployeeCard: 
-  React.FunctionComponent<Props> = ({ 
-    employee,
-    allEmployees,
-    refetch, 
-  }) => {
-  const [editEmployeeFormDialogOpen, setEditEmployeeFormDialogOpen] = React.useState<boolean>(false);
+const EmployeeCard: React.FunctionComponent<Props> = ({
+  employee,
+  refetch,
+}) => {
+  const { isAdmin } = useAuth();
 
-  const { mutateAsync: updateEmployee } = useMutation({
-    mutationFn: (values: UpsertEmployeePayload) => _updateEmployee(values, employee.id),
+  const [deleteEmployeeDialogOpen, setDeleteEmployeeDialogOpen] =
+    React.useState<boolean>(false);
+
+  const { mutateAsync: deleteEmployee } = useMutation({
+    mutationFn: () => _deleteEmployee(employee.id),
     onSuccess: () => {
       refetch();
     },
   });
-
-  const handleSubmit = async (values: any) => {
-    await updateEmployee({
-      first_name: values.first_name,
-      last_name: values.last_name,
-      phone: values.phone,
-      email: values.email,
-      address: values.address,
-      about: values.about,
-    });
-
-    setEditEmployeeFormDialogOpen(false);
-  };
 
   return (
     <>
@@ -58,56 +44,46 @@ const EmployeeCard:
         <Stack direction={"row"} spacing={20}>
           <Stack direction={"column"}>
             <Typography variant="body1" component="p">
-              Numer telefonu:{" "} 
-              <Typography variant="body1" component="b" fontWeight={600}>
-                  {employee.phone}
-              </Typography>
-            </Typography>
-            <Typography variant="body1" component="p">
               Adres e-mail:{" "}
               <Typography variant="body1" component="b" fontWeight={600}>
                 {employee.email}
               </Typography>
             </Typography>
-            <Typography variant="body1" component="p">
-              Adres:{" "}
-              <Typography variant="body1" component="b" fontWeight={600}>
-                {employee.address}
-              </Typography>
-            </Typography>
           </Stack>
           <Stack>
             <Typography variant="body1" component="p">
-              Świadczone usługi:
+              Ranga :{" "}
+              <Typography variant="body1" component="b" fontWeight={600}>
+                {employee.role === "ADMIN" ? "Administrator" : "Pracownik"}
+              </Typography>
             </Typography>
             <Typography variant="body1" component="p">
               O mnie:{" "}
               <Typography variant="body1" component="b" fontWeight={600}>
                 {employee.about}
               </Typography>
-            </Typography> 
+            </Typography>
           </Stack>
-        </Stack>     
-        <Button
+        </Stack>
+        {isAdmin && (
+          <>
+            <Button
               variant="contained"
-              color="primary"
-              onClick={() => setEditEmployeeFormDialogOpen(true)}
-              sx={{
-                marginTop: "20px",
-              }}
+              color="error"
+              onClick={() => setDeleteEmployeeDialogOpen(true)}
             >
-              Edytuj profil
-        </Button>
+              Usuń pracownika
+            </Button>
+            <DeleteModal
+              onConfirm={() => deleteEmployee()}
+              title="Usuń pracownika"
+              description={`Czy napewno chcesz usunąć ${employee.first_name} ${employee.last_name} z firmy?`}
+              open={deleteEmployeeDialogOpen}
+              onClose={() => setDeleteEmployeeDialogOpen(false)}
+            />
+          </>
+        )}
       </Card>
-      <EmployeeFormDialog
-        employees={allEmployees ?? []}
-        onSubmit={handleSubmit}
-        open={editEmployeeFormDialogOpen}
-        handleClose={() => setEditEmployeeFormDialogOpen(false)}
-        title="Edytuj profil pracownika"
-        description="Wypełnij formularz aby edytować profil"
-        submitButtonLabel="Zapisz"
-      />
     </>
   );
 };
