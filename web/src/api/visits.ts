@@ -1,4 +1,5 @@
 import api from "src/config/axios";
+import { Employee } from "./auth";
 import { Client } from "./client";
 import { Service } from "./services";
 
@@ -8,6 +9,7 @@ export interface UpsertVisitPayload {
   note: string;
   client_id: number;
   service_id: number;
+  employee_id: number;
 }
 
 export interface Visit {
@@ -19,6 +21,7 @@ export interface Visit {
   updatedAt: string;
   user: Client;
   service: Service;
+  Employee: Employee;
 }
 
 export const _addVisit = async (visit: UpsertVisitPayload) => {

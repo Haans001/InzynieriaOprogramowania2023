@@ -1,5 +1,6 @@
 "use client";
 import Logout from "@mui/icons-material/Logout";
+import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -21,7 +22,7 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
 
-  const { employee, logout } = useAuth();
+  const { employee, logout, isAdmin } = useAuth();
 
   const intials = (
     employee?.first_name?.[0]! + employee?.last_name[0]!
@@ -36,6 +37,7 @@ export default function AccountMenu() {
           textAlign: "center",
         }}
       >
+        {isAdmin && <Typography color="red">Administrator</Typography>}
         <IconButton
           onClick={handleClick}
           size="small"

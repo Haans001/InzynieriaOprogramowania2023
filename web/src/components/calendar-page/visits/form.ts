@@ -49,6 +49,7 @@ export const validationSchema = (visits: Visit[], day: string) =>
     note: Yup.string().optional(),
     service_id: Yup.string().required("Pole wymagane"),
     client_id: Yup.string().required("Pole wymagane"),
+    employee_id: Yup.string().required("Pole wymagane"),
   });
 
 export const getInitialValues = (visit: Visit) => ({
@@ -57,6 +58,7 @@ export const getInitialValues = (visit: Visit) => ({
   note: visit?.note ?? "",
   service_id: "",
   client_id: visit?.user?.id.toString() ?? "",
+  employee_id: visit?.Employee?.id.toString() ?? "",
 });
 
 export const getVisitHours = (
