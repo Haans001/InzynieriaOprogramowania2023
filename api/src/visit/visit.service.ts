@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { EmailService } from 'src/email/email.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 
 @Injectable()
 export class VisitService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly emailService: EmailService,
+  ) {}
 
   async create(createVisitDto: CreateVisitDto) {
-    return await this.prisma.visit.create({
+    const result = await this.prisma.visit.create({
       data: {
         note: createVisitDto.note,
         time_start: createVisitDto.time_start,
@@ -17,12 +21,48 @@ export class VisitService {
         serviceId: createVisitDto.service_id,
         employeeId: createVisitDto.employee_id,
       },
+      select: {
+        user: {
+          select: {
+            email: true,
+          },
+        },
+        Employee: {
+          select: {
+            first_name: true,
+            last_name: true,
+          },
+        },
+      },
     });
+
+    const user = result.user;
+    const employee = result.Employee;
+
+    const visitInfo = {
+      date: '2024-01-15',
+      hour: '15:30',
+      employee: `${employee.first_name} ${employee.last_name}`,
+    };
+
+    const emailTemplate = `
+          <h2>Potwierdzenie Wizyty w Salonie Fryzjerskim Kleopatra</h2>
+          <p>Dzień wizyty: ${visitInfo.date}</p>
+          <p>Godzina wizyty: ${visitInfo.hour}</p>
+          <p>Fryzjer obsługujący wizytę: ${visitInfo.employee}</p>
+          <p>Dziękujemy za skorzystanie z usług Salonu Fryzjerskiego Kleopatra. Czekamy na Ciebie!</p>
+        `;
+
+    await this.emailService.sendEmail(
+      'Potwierdzenie Wizyty w Salonie Fryzjerskim Kleopatra',
+      emailTemplate,
+      user.email,
+    );
+
+    return result;
   }
 
   async findForDay(day: string) {
-    console.log(day);
-    console.log(new Date(`${day}T00:00:00Z`).toISOString());
     return await this.prisma.visit.findMany({
       where: {
         time_start: {

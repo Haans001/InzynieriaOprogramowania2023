@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Link from "next/link";
 import * as React from "react";
 import { useAuth } from "src/providers/auth-provider";
 import { ZIndex } from "src/utils/zIndex";
@@ -93,9 +94,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profil
-        </MenuItem>
+        <Link href="/dashboard/profile">
+          <MenuItem onClick={handleClose}>
+            <Avatar /> Profil
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem onClick={() => logout()}>
           <ListItemIcon>
