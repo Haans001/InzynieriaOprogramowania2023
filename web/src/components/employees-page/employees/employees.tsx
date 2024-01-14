@@ -1,12 +1,18 @@
 "use client";
-import { Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { Button, Stack, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as React from "react";
-import { _getAllEmployees } from "src/api/employee";
+import {
+  UpsertEmployeePayload,
+  _addEmployee,
+  _getAllEmployees,
+} from "src/api/employee";
+import { useAuth } from "src/providers/auth-provider";
 import EmployeeCard from "./employee-card";
+import EmployeeFormDialog from "./employee-form-dialog";
 
 const Employees: React.FunctionComponent = () => {
-  const { 
+  const {
     data: employees,
     refetch,
     isLoading,
@@ -15,10 +21,22 @@ const Employees: React.FunctionComponent = () => {
     queryFn: () => _getAllEmployees(),
   });
 
+  const { isAdmin } = useAuth();
+
+  const [addEmployeeFormDialogOpen, setAddEmployeeFormDialogOpen] =
+    React.useState<boolean>(false);
+
   if (isLoading) {
     return <Typography>Ładowanie...</Typography>;
   }
-  
+
+  const { mutateAsync: addEmployee } = useMutation({
+    mutationFn: (values: UpsertEmployeePayload) => _addEmployee(values),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   return (
     <>
       <Typography variant="h5" component="h5" fontWeight={700}>
@@ -30,14 +48,37 @@ const Employees: React.FunctionComponent = () => {
         }}
       >
         {employees?.map((employee) => (
-          <EmployeeCard 
-          key={employee.id}
-          employee={employee}
-          allEmployees={employees ?? []}
-          refetch={refetch}
+          <EmployeeCard
+            key={employee.id}
+            employee={employee}
+            allEmployees={employees ?? []}
+            refetch={refetch}
           />
         ))}
       </Stack>
+      {isAdmin && (
+        <>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => setAddEmployeeFormDialogOpen(true)}
+          >
+            Dodaj pracownika
+          </Button>
+          <EmployeeFormDialog
+            onSubmit={async (values) => {
+              console.log(values);
+              await addEmployee(values);
+              setAddEmployeeFormDialogOpen(false);
+            }}
+            open={addEmployeeFormDialogOpen}
+            handleClose={() => setAddEmployeeFormDialogOpen(false)}
+            title="Dodaj pracownika"
+            description="Wypełnij formularz aby dodać profil"
+            submitButtonLabel="Zapisz"
+          />
+        </>
+      )}
     </>
   );
 };

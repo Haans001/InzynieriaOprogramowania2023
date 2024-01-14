@@ -23,26 +23,48 @@ export class EmployeeService {
     });
   }
 
-  findAll() {
-    return `This action returns all employee`;
+  async findAll() {
+    return await this.prisma.employee.findMany({
+      where: {
+        is_removed: false,
+        email: {
+          not: 'admin@kleopatra.com',
+        },
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  async findOne(id: number) {
+    const res = await this.prisma.employee.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    delete res.hashed_password;
+    return res;
   }
 
   update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     return `This action updates a #${id} employee`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(id: number) {
+    return await this.prisma.employee.update({
+      where: {
+        id,
+      },
+      data: {
+        is_removed: true,
+      },
+    });
   }
 
   async findByUsername(username: string) {
     return await this.prisma.employee.findFirst({
       where: {
         username,
+        is_removed: false,
       },
     });
   }

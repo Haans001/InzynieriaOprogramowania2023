@@ -19,4 +19,7 @@ export class CreateEmployeeDto {
 
   @IsString()
   role: Role;
+
+  @IsString()
+  about: string;
 }

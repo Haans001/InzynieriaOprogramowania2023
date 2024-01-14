@@ -2,6 +2,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChairIcon from "@mui/icons-material/Chair";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -15,6 +16,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import * as React from "react";
+import AccountMenu from "src/components/layout/account-menu";
 import { ZIndex } from "src/utils/zIndex";
 
 const DRAWER_WIDTH = 240;
@@ -39,9 +41,19 @@ export default function DashboardLayout({
           <DashboardIcon
             sx={{ color: "#444", mr: 2, transform: "translateY(-2px)" }}
           />
-          <Typography variant="h6" color="text.primary">
-            Kleopatra - Salon Fryzjerski
-          </Typography>
+          <Stack
+            justifyContent="space-between"
+            alignItems="center"
+            direction={"row"}
+            sx={{
+              width: "100%",
+            }}
+          >
+            <Typography variant="h6" color="text.primary">
+              Kleopatra - Salon Fryzjerski
+            </Typography>
+            <AccountMenu />
+          </Stack>
         </Toolbar>
       </AppBar>
       <Drawer

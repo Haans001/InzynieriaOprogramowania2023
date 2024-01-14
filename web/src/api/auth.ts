@@ -11,6 +11,7 @@ export interface Employee {
   email: string;
   id: number;
   role: "ADMIN" | "EMPLOYEE";
+  about: string;
 }
 
 export const _login = async (username: string, password: string) => {

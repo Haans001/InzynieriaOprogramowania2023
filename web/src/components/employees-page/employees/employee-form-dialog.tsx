@@ -1,8 +1,6 @@
-import FormTextInput from "src/components/shared/form/form-text-input";
-import { ZIndex } from "src/utils/zIndex";
-import { 
-  Button, 
-  Dialog, 
+import {
+  Button,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -10,26 +8,25 @@ import {
   Stack,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import { Employee } from "src/api/employee";
+import FormSelectInput from "src/components/shared/form/form-select-input";
+import FormTextInput from "src/components/shared/form/form-text-input";
+import { ZIndex } from "src/utils/zIndex";
 import { getInitialValues, validationSchema } from "./form";
 
 interface Props {
   open: boolean;
   handleClose: () => void;
-  employees: Employee[];
-  employee?: Employee;
   onSubmit: (values: any) => Promise<void>;
   title: string;
   description: string;
   submitButtonLabel: string;
+  isEdit?: boolean;
 }
 
-const EmployeeFormDialog: React.FC<Props> = ({ 
-  open, 
+const EmployeeFormDialog: React.FC<Props> = ({
+  open,
   handleClose,
   onSubmit,
-  employees,
-  employee,
   title,
   description,
   submitButtonLabel,
@@ -58,12 +55,11 @@ const EmployeeFormDialog: React.FC<Props> = ({
         <Formik
           validationSchema={validationSchema}
           onSubmit={onSubmit}
-          initialValues={getInitialValues(employee ?? ({} as Employee))}
+          initialValues={getInitialValues()}
         >
           <Form>
             <Stack direction={"row"} spacing={2}>
               <FormTextInput
-                autoFocus
                 margin="dense"
                 label="Imię"
                 type="text"
@@ -71,7 +67,6 @@ const EmployeeFormDialog: React.FC<Props> = ({
                 fullWidth
               />
               <FormTextInput
-                autoFocus
                 margin="dense"
                 label="Nazwisko"
                 type="text"
@@ -80,65 +75,61 @@ const EmployeeFormDialog: React.FC<Props> = ({
               />
             </Stack>
             <FormTextInput
-              autoFocus
-              margin="dense"
-              label="Numer telefonu"
-              type="text"
-              name="phone"
-              fullWidth
-            />
-            <FormTextInput
-              autoFocus
               margin="dense"
               label="Adres e-mail"
               type="text"
               name="email"
               fullWidth
             />
-            <Stack direction={"row"} spacing={2}>
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Ulica"
-                type="text"
-                name="street"
-                fullWidth
-              />
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Numer"
-                type="number"
-                name="number"
-                fullWidth
-              />
-            </Stack>
-            <Stack direction={"row"} spacing={2}>
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Kod pocztowy"
-                type="text"
-                name="postcode"
-                fullWidth
-              />
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Miejscowość"
-                type="text"
-                name="city"
-                fullWidth
-              />
-            </Stack>
+
             <FormTextInput
-              autoFocus
               margin="dense"
               label="O mnie"
               type="text"
               name="about"
               fullWidth
               multiline
+              sx={{
+                marginBottom: "20px",
+              }}
+            />
+            <FormSelectInput
+              name="role"
+              label="Ranga"
+              placeholder="Wybierz rangę"
+              options={[
+                {
+                  value: "ADMIN",
+                  label: "Administrator",
+                },
+                {
+                  value: "EMPLOYEE",
+                  label: "Pracownik",
+                },
+              ]}
+            />
+            <DialogContentText
+              sx={{
+                color: "black",
+                marginTop: "20px",
+                marginBottom: "10px",
+              }}
+            >
+              Dane do logowania
+            </DialogContentText>
+            <FormTextInput
+              margin="dense"
+              label="Nazwa Użytkownika"
+              type="text"
+              name="username"
+              fullWidth
+            />
+            <FormTextInput
+              margin="dense"
+              label="Hasło"
+              type="password"
+              name="password"
+              fullWidth
             />
             <DialogActions
               sx={{
