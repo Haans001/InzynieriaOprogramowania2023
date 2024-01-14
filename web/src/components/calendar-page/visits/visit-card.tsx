@@ -75,7 +75,7 @@ const VisitCard: React.FunctionComponent<Props> = ({
         marginBottom: "20px",
       }}
     >
-      <Link href={`clients/profile/${visit.user.id}`}>
+      <Link href={`dashboard/clients/profile/${visit.user.id}`}>
         <Stack direction="row" alignItems={"center"}>
           <Typography variant="h6" component="h6" fontWeight={700}>
             {fullName}

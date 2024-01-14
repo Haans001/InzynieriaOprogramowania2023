@@ -1,4 +1,5 @@
 import api from "src/config/axios";
+import { Employee } from "./auth";
 
 export interface AddEmployeePayload {
   first_name: string;
@@ -9,19 +10,9 @@ export interface AddEmployeePayload {
   about: string;
 }
 
-export interface UpsertEmployeePayload{
+export interface UpsertEmployeePayload {
   last_name: string;
   first_name: string;
-  phone: string;
-  email: string;
-  address: string;
-  about: string;
-}
-
-export interface Employee {
-  id: number;
-  first_name: string;
-  last_name: string;
   phone: string;
   email: string;
   address: string;
@@ -53,7 +44,7 @@ export const _getAllEmployees = async () => {
       phone: "111",
       email: "ll@ll",
       address: "ddd",
-      about: "aa"
+      about: "aa",
     },
     {
       id: 3,
@@ -62,7 +53,7 @@ export const _getAllEmployees = async () => {
       phone: "111",
       email: "ll@ll",
       address: "ddd",
-      about: "aa"
+      about: "aa",
     },
     {
       id: 4,
@@ -71,14 +62,17 @@ export const _getAllEmployees = async () => {
       phone: "111",
       email: "ll@ll",
       address: "ddd",
-      about: "aa"
+      about: "aa",
     },
   ];
   const response = employees;
   return response;
 };
 
-export const _updateEmployee = async (employee: UpsertEmployeePayload, id: number) => {
+export const _updateEmployee = async (
+  employee: UpsertEmployeePayload,
+  id: number,
+) => {
   const response = await api.patch(`/employee/${id}`, {
     ...employee,
   });
