@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { AdminRoute } from 'src/auth/decorators/admin-route.decorator';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { ServiceService } from './service.service';
@@ -21,7 +20,6 @@ export class ServiceController {
   }
 
   @Get()
-  @AdminRoute()
   findAll() {
     return this.serviceService.findAll();
   }

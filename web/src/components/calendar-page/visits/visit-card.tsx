@@ -59,6 +59,7 @@ const VisitCard: React.FunctionComponent<Props> = ({
       time_start: visitTimeStart.toISOString(),
       service_id: parseInt(values.service_id),
       client_id: parseInt(values.client_id),
+      employee_id: parseInt(values.employee_id),
     });
 
     setEditVisitDialogOpen(false);
@@ -67,6 +68,8 @@ const VisitCard: React.FunctionComponent<Props> = ({
   const isVisitDone = new Date(visit.time_end) < new Date();
 
   const fullName = `${visit.user.first_name} ${visit.user.last_name}`;
+
+  const employeeFullName = `${visit.Employee.first_name} ${visit.Employee.last_name}`;
 
   return (
     <Card
@@ -97,6 +100,12 @@ const VisitCard: React.FunctionComponent<Props> = ({
         Notatka:{" "}
         <Typography variant="body1" component="span">
           {visit.note}
+        </Typography>
+      </Typography>
+      <Typography variant="body1" component="p" fontWeight={700}>
+        Fryzjer :{" "}
+        <Typography variant="body1" component="span">
+          {employeeFullName}
         </Typography>
       </Typography>
       {!isVisitDone ? (

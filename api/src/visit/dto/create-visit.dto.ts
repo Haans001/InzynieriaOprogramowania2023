@@ -15,4 +15,7 @@ export class CreateVisitDto {
 
   @IsInt()
   service_id: number;
+
+  @IsInt()
+  employee_id: number;
 }

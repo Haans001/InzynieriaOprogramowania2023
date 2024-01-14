@@ -47,6 +47,7 @@ const Visits: React.FunctionComponent<Props> = ({ date }) => {
       time_start: visitTimeStart.toISOString(),
       service_id: parseInt(values.service_id),
       client_id: parseInt(values.client_id),
+      employee_id: parseInt(values.employee_id),
     });
 
     setAddVisitDialogOpen(false);
