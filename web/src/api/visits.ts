@@ -43,3 +43,8 @@ export const _deleteVisit = async (id: number) => {
   const response = await api.delete(`/visit/${id}`);
   return response.data;
 };
+
+export const _getEmployeeVisits = async (employee_id: number) => {
+  const response = await api.get(`/visit/employee/${employee_id}`);
+  return response.data as Visit[];
+};

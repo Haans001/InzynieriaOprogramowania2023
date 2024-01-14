@@ -27,7 +27,11 @@ export class ClientService {
     return await this.prisma.user.findUnique({
       where: { id: id },
       include: {
-        Visit: true,
+        Visit: {
+          include: {
+            Employee: true,
+          },
+        },
       },
     });
   }

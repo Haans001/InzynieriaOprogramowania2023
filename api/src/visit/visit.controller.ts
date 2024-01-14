@@ -25,11 +25,6 @@ export class VisitController {
     return this.visitService.findForDay(day);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.visitService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVisitDto: UpdateVisitDto) {
     return this.visitService.update(+id, updateVisitDto);
@@ -38,5 +33,10 @@ export class VisitController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.visitService.remove(+id);
+  }
+
+  @Get('employee/:id')
+  findEmployeeVisits(@Param('id') id: string) {
+    return this.visitService.findEmployeeVisits(+id);
   }
 }

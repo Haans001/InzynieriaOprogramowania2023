@@ -38,8 +38,17 @@ export class VisitService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} visit`;
+  async findEmployeeVisits(employee_id: number) {
+    return await this.prisma.visit.findMany({
+      where: {
+        employeeId: employee_id,
+      },
+      include: {
+        user: true,
+        service: true,
+        Employee: true,
+      },
+    });
   }
 
   async update(id: number, updateVisitDto: UpdateVisitDto) {
