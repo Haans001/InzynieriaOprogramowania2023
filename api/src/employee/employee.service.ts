@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { Role } from 'src/auth/role.enum';
+import * as bcrypt from 'bcrypt';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
+const SALT_ROUNDS = 10;
+
 @Injectable()
 export class EmployeeService {
-  private readonly employees = [
-    {
-      id: 1,
-      username: 'john',
-      password: 'changeme',
-      role: Role.Admin,
-    },
-    {
-      id: 2,
-      username: 'maria',
-      password: 'guess',
-      role: Role.Employee,
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return 'This action adds a new employee';
+  async create(createEmployeeDto: CreateEmployeeDto) {
+    const { password, ...rest } = createEmployeeDto;
+
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    return await this.prisma.employee.create({
+      data: {
+        ...rest,
+        hashed_password: hashedPassword,
+      },
+    });
   }
 
   findAll() {
@@ -41,6 +40,10 @@ export class EmployeeService {
   }
 
   async findByUsername(username: string) {
-    return this.employees.find((employee) => employee.username === username);
+    return await this.prisma.employee.findFirst({
+      where: {
+        username,
+      },
+    });
   }
 }

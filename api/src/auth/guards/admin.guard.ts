@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Role } from '@prisma/client';
 import { ADMIN_ROUTE_KEY } from '../decorators/admin-route.decorator';
-import { Role } from '../role.enum';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
     if (isAdminRoute) {
       const request = context.switchToHttp().getRequest();
       const user = request.user;
-      return user?.role === Role.Admin;
+      return user?.role === Role.ADMIN;
     }
 
     return true; // Allow access for non-admin routes

@@ -6,15 +6,11 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import { AdminGuard } from 'src/auth/guards/admin.guard';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 import { VisitService } from './visit.service';
 
-@UseGuards(JwtAuthGuard, AdminGuard)
 @Controller('visit')
 export class VisitController {
   constructor(private readonly visitService: VisitService) {}
