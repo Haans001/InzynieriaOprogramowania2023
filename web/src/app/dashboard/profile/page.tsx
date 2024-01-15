@@ -1,6 +1,7 @@
 "use client";
 import { Box, Container, Paper, Tab, Tabs } from "@mui/material";
 import * as React from "react";
+import ChangePasswordForm from "src/components/employee/employee-profile/change-password-form";
 import EmployeeProfile from "src/components/employee/employee-profile/employee-profile";
 import { useAuth } from "src/providers/auth-provider";
 
@@ -53,7 +54,7 @@ export default function EmployeePage() {
             <EmployeeProfile />
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={1}>
-            Item Two
+            <ChangePasswordForm />
           </CustomTabPanel>
         </Box>
       </Paper>

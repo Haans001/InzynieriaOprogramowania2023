@@ -14,8 +14,6 @@ const EmployeeProfile: React.FunctionComponent = () => {
     queryFn: () => _getEmployeeVisits(employee?.id!),
   });
 
-  console.log(data);
-
   return (
     <div>
       <Typography variant="h4">

@@ -7,9 +7,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { EmployeeService } from 'src/employee/employee.service';
-import { AuthService } from './auth.service';
+import { AuthService, BaseResponse } from './auth.service';
 import { AdminRoute } from './decorators/admin-route.decorator';
 import { Public } from './decorators/is-public.decorator';
+import { ChangePasswordDto } from './dto/change-password-dto';
 import { LoginDto } from './dto/login-dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
@@ -37,5 +38,13 @@ export class AuthController {
   @Get('protected')
   getProtected() {
     return 'protected';
+  }
+
+  @Post('change-password')
+  async changePassword(
+    @Request() req,
+    @Body() body: ChangePasswordDto,
+  ): Promise<BaseResponse> {
+    return await this.authService.changePassword(+req.user.userId, body);
   }
 }

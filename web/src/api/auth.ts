@@ -14,6 +14,11 @@ export interface Employee {
   about: string;
 }
 
+export interface ChangePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export const _login = async (username: string, password: string) => {
   const response = await api.post("/auth/login", {
     username,
@@ -26,4 +31,12 @@ export const _getProfile = async () => {
   const response = await api.get("/auth/profile");
   console.log(response.data);
   return response.data as Employee;
+};
+
+export const _changePassword = async (payload: ChangePasswordPayload) => {
+  const response = await api.post("/auth/change-password", payload);
+  return response.data as {
+    success: boolean;
+    message?: string;
+  };
 };
