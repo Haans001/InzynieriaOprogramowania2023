@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { format } from 'date-fns';
 import { EmailService } from 'src/email/email.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
-
 @Injectable()
 export class VisitService {
   constructor(
@@ -40,8 +40,8 @@ export class VisitService {
     const employee = result.Employee;
 
     const visitInfo = {
-      date: '2024-01-15',
-      hour: '15:30',
+      date: format(new Date(createVisitDto.time_start), 'dd-MM-yyyy'),
+      hour: format(new Date(createVisitDto.time_start), 'HH:mm'),
       employee: `${employee.first_name} ${employee.last_name}`,
     };
 

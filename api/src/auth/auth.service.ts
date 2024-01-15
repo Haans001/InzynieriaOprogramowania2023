@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Employee } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { EmployeeService } from 'src/employee/employee.service';
 @Injectable()
@@ -9,7 +10,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateUser(
+    username: string,
+    password: string,
+  ): Promise<{
+    success: boolean;
+    message?: string;
+    employee?: Omit<Employee, 'hashed_password'>;
+  }> {
     const user = await this.employeeService.findByUsername(username);
 
     if (user) {
@@ -17,17 +25,26 @@ export class AuthService {
 
       if (match) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { hashed_password, ...result } = user;
-        return result;
+        const { hashed_password, ...employee } = user;
+        return {
+          success: true,
+          employee,
+        };
+      } else {
+        return {
+          success: false,
+          message: 'Hasło jest nieprawidłowe',
+        };
       }
     }
 
-    return null;
+    return {
+      success: false,
+      message: 'Nie znaleziono pracownika o podanym loginie.',
+    };
   }
 
   async login(user: any) {
-    console.log(process.env.JWT_SECRET);
-
     const payload = { username: user.username, sub: user.id, role: user.role };
     console.log('payload: ', payload);
     return {
