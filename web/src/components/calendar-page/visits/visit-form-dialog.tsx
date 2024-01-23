@@ -103,60 +103,64 @@ const VisitFormDialog: React.FC<Props> = ({
             onSubmit={onSubmit}
             initialValues={getInitialValues(visit ?? ({} as Visit))}
           >
-            <Form>
-              <Stack direction="column" spacing={2}>
-                <FormSelectInput
-                  name="service_id"
-                  label="Usługa"
-                  options={selectServiceOptions}
-                />
-                <FormSelectInput
-                  name="client_id"
-                  label="Klient"
-                  options={selectClientOptions}
-                />
-                <FormSelectInput
-                  name="employee_id"
-                  label="Przypisany Pracownik"
-                  options={selectEmployeeOptions}
-                />
-                <Stack direction="row" spacing={2}>
-                  <FormTimePickerInput
-                    autoFocus
-                    label="Godzina rozpoczęcia"
-                    name="time_start"
-                    referenceDate={dayjs(date)}
+            {({ values }) => (
+              <Form>
+                {console.log(values)}
+                <Stack direction="column" spacing={2}>
+                  <FormSelectInput
+                    name="service_id"
+                    label="Usługa"
+                    options={selectServiceOptions}
                   />
-                  <FormTimePickerInput
-                    autoFocus
-                    label="Godzina zakończenia"
-                    name="time_end"
+                  <FormSelectInput
+                    name="client_id"
+                    label="Klient"
+                    options={selectClientOptions}
                   />
+                  <FormSelectInput
+                    name="employee_id"
+                    label="Przypisany Pracownik"
+                    options={selectEmployeeOptions}
+                  />
+                  <Stack direction="row" spacing={2}>
+                    <FormTimePickerInput
+                      autoFocus
+                      label="Godzina rozpoczęcia"
+                      name="time_start"
+                      referenceDate={dayjs(date)}
+                    />
+                    <FormTimePickerInput
+                      autoFocus
+                      label="Godzina zakończenia"
+                      name="time_end"
+                      referenceDate={dayjs(date)}
+                    />
+                  </Stack>
                 </Stack>
-              </Stack>
-              <FormTextInput
-                autoFocus
-                margin="dense"
-                label="Notatka"
-                type="text"
-                name="note"
-                fullWidth
-                multiline
-                rows={2}
-                maxRows={4}
-              />
+                <FormTextInput
+                  autoFocus
+                  margin="dense"
+                  label="Notatka"
+                  type="text"
+                  name="note"
+                  fullWidth
+                  multiline
+                  rows={2}
+                  maxRows={4}
+                />
 
-              <DialogActions
-                sx={{
-                  marginTop: "20px",
-                }}
-              >
-                <Button onClick={handleClose} type="button">
-                  Odrzuć
-                </Button>
-                <Button type="submit">{submitButtonLabel}</Button>
-              </DialogActions>
-            </Form>
+                <DialogActions
+                  sx={{
+                    marginTop: "20px",
+                  }}
+                >
+                  <Button onClick={handleClose} type="button">
+                    Odrzuć
+                  </Button>
+                  <Button type="submit">{submitButtonLabel}</Button>
+                </DialogActions>
+              </Form>
+            )}
           </Formik>
         </DialogContent>
       </Dialog>

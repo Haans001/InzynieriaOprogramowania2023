@@ -15,14 +15,15 @@ const FormTimePickerInput: React.FunctionComponent<
     <TimePicker
       {...props}
       value={dayjs(field.value)}
-      onChange={(value) =>
+      onChange={(value) => {
+        console.log(value?.toISOString());
         field.onChange({
           target: {
             name,
             value: value?.toISOString(),
           },
-        })
-      }
+        });
+      }}
       format="HH:mm"
       slotProps={{
         popper: {

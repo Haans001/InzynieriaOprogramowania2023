@@ -33,6 +33,7 @@ export const validationSchema = (visits: Visit[], day: string) =>
         "Czas zakończenia musi być późniejszy niż czas rozpoczęcia",
         function (value) {
           const { time_start } = this.parent;
+          console.log(time_start, value);
           return (
             !time_start || !value || new Date(time_start) < new Date(value)
           );
