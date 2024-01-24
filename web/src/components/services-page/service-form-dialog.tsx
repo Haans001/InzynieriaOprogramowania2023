@@ -86,10 +86,31 @@ const ServiceFormDialog: React.FC<Props> = ({
                 marginTop: "20px",
               }}
             >
-              <Button onClick={handleClose} type="button">
+              <Button 
+                onClick={handleClose} type="button" variant="text"
+                sx={{
+                  color: "#B32222",
+                  marginTop: "20px",
+                  '&:hover': {
+                    backgroundColor: "#B32222", 
+                    color: "white",
+                  },
+                }}
+              >
                 Odrzuć
               </Button>
-              <Button type="submit">{submitButtonLabel}</Button>
+              <Button 
+                type="submit"
+                variant="text"
+                sx={{
+                  color: "#C6A619",
+                  marginTop: "20px",
+                  '&:hover': {
+                    backgroundColor: "#167014", 
+                    color: "white",
+                  },
+                }}
+                >{submitButtonLabel}</Button>
             </DialogActions>
           </Form>
         </Formik>

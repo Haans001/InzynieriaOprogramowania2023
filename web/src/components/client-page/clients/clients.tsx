@@ -12,7 +12,7 @@ const Clients: React.FunctionComponent = () => {
 
   return (
     <>
-      <Typography variant="h5" component="h5" fontWeight={700}>
+      <Typography variant="h5" component="h5" fontWeight={500}>
         Lista klientów
       </Typography>
       <Typography>Kliknij na klienta, aby zobaczyć jego profil.</Typography>

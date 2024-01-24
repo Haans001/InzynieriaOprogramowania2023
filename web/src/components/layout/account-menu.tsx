@@ -94,7 +94,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Link href="/dashboard/profile">
+        <Link href="/dashboard/profile" style={{ textDecoration: "none", color: "#C6A619" }}>
           <MenuItem onClick={handleClose}>
             <Avatar /> Profil
           </MenuItem>

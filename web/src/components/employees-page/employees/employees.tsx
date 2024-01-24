@@ -39,7 +39,7 @@ const Employees: React.FunctionComponent = () => {
 
   return (
     <>
-      <Typography variant="h5" component="h5" fontWeight={700}>
+      <Typography variant="h5" component="h5" fontWeight={300}>
         Lista pracowników
       </Typography>
       <Stack
@@ -62,6 +62,15 @@ const Employees: React.FunctionComponent = () => {
             variant="contained"
             size="large"
             onClick={() => setAddEmployeeFormDialogOpen(true)}
+            sx={{
+              color: "white",
+              backgroundColor: "#C6A619",
+              fontWeight: "400",
+              marginTop: "20px",
+              '&:hover': {
+                backgroundColor: "#857013", 
+              },
+            }}
           >
             Dodaj pracownika
           </Button>

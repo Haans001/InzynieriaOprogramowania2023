@@ -43,23 +43,23 @@ const EmployeeCard: React.FunctionComponent<Props> = ({
         </Typography>
         <Stack direction={"row"} spacing={20}>
           <Stack direction={"column"}>
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="p" fontWeight={500}>
               Adres e-mail:{" "}
-              <Typography variant="body1" component="b" fontWeight={600}>
+              <Typography variant="body1" component="b" fontWeight={300}>
                 {employee.email}
               </Typography>
             </Typography>
           </Stack>
           <Stack>
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="p" fontWeight={500}>
               Ranga :{" "}
-              <Typography variant="body1" component="b" fontWeight={600}>
+              <Typography variant="body1" component="b" fontWeight={300}>
                 {employee.role === "ADMIN" ? "Administrator" : "Pracownik"}
               </Typography>
             </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant="body1" component="p" fontWeight={500}>
               O mnie:{" "}
-              <Typography variant="body1" component="b" fontWeight={600}>
+              <Typography variant="body1" component="b" fontWeight={300}>
                 {employee.about}
               </Typography>
             </Typography>
@@ -69,8 +69,16 @@ const EmployeeCard: React.FunctionComponent<Props> = ({
           <>
             <Button
               variant="contained"
-              color="error"
               onClick={() => setDeleteEmployeeDialogOpen(true)}
+              sx={{
+                fontWeight: "400",
+                color: "#FCF9EC",
+                backgroundColor: "#B32222",
+                marginTop: "20px",
+                '&:hover': {
+                  backgroundColor: "red", 
+                },
+              }}
             >
               Usuń pracownika
             </Button>

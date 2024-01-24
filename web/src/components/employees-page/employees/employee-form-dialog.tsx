@@ -136,10 +136,35 @@ const EmployeeFormDialog: React.FC<Props> = ({
                 marginTop: "20px",
               }}
             >
-              <Button onClick={handleClose} type="button">
+              <Button 
+                onClick={handleClose} 
+                type="button"
+                sx={{
+                  fontWeight: "400",
+                  color: "#FCF9EC",
+                  backgroundColor: "#B32222",
+                  marginTop: "20px",
+                  '&:hover': {
+                    backgroundColor: "red", 
+                  },
+                }}
+              >
                 Odrzuć
               </Button>
-              <Button type="submit">{submitButtonLabel}</Button>
+              <Button 
+                type="submit"
+                sx={{
+                  fontWeight: "400",
+                  color: "#FCF9EC",
+                  backgroundColor: "#167014",
+                  marginTop: "20px",
+                  '&:hover': {
+                    backgroundColor: "green", 
+                  },
+                }}
+              >
+                {submitButtonLabel}
+              </Button>
             </DialogActions>
           </Form>
         </Formik>

@@ -49,7 +49,13 @@ const ProductRow: React.FunctionComponent<Props> = ({
         <TableCell align="right">{product.quantity}</TableCell>
         <TableCell align="right">
           <Button
-            color="secondary"
+          sx={{
+            color: "#C6A619",
+            '&:hover': {
+              color: "#FCF9EC",
+              backgroundColor: "#C6A619", 
+            },
+          }}
             onClick={() => {
               setEditProductDialogOpen(true);
             }}

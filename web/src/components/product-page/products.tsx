@@ -57,7 +57,7 @@ const Products: React.FunctionComponent = () => {
       <Typography
         variant="h5"
         component="h5"
-        fontWeight={700}
+        fontWeight={300}
         sx={{
           marginBottom: "40px",
         }}
@@ -71,11 +71,15 @@ const Products: React.FunctionComponent = () => {
             aria-label="lista-produktów"
             title="Magazyn"
           >
-            <TableHead>
+            <TableHead
+              sx={{
+                backgroundColor: "#C6A619",
+              }}
+            >
               <TableRow>
                 <TableCell>Nazwa produktu</TableCell>
                 <TableCell align="right">Ilość</TableCell>
-                <TableCell align="right">Edycja</TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -98,7 +102,13 @@ const Products: React.FunctionComponent = () => {
         color="primary"
         onClick={() => setAddProductFormDialogOpen(true)}
         sx={{
+          color: "white",
+          fontWeight: "400",
+          backgroundColor: "#C6A619",
           marginTop: "20px",
+          '&:hover': {
+            backgroundColor: "#857013", 
+          },
         }}
       >
         Dodaj produkt

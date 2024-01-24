@@ -2,6 +2,7 @@ import { Button, TableCell, TableRow } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import * as React from "react";
 import { VscEdit } from "react-icons/vsc";
+import { VscTrash } from "react-icons/vsc";
 import {
   Service,
   UpsertServicePayload,
@@ -62,20 +63,30 @@ const ServiceRow: React.FunctionComponent<Props> = ({
         <TableCell align="right">{`${service.price} zł`}</TableCell>
         <TableCell align="right">
           <Button
-            color="secondary"
+            sx={{
+              color: "#C6A619",
+              '&:hover': {
+                color: "#FCF9EC",
+                backgroundColor: "#C6A619", 
+              },
+            }}
             onClick={() => {
               setEditServiceFormDialogOpen(true);
             }}
           >
             <VscEdit />
           </Button>
-        </TableCell>
-        <TableCell align="right">
           <Button
-            color="error"
+            sx={{
+              color: "red",
+              '&:hover': {
+                color: "white",
+                backgroundColor: "red", 
+              },
+            }}
             onClick={() => setDeleteServiceDialogOpen(true)}
           >
-            Usuń usługę
+            <VscTrash />
           </Button>
         </TableCell>
       </TableRow>

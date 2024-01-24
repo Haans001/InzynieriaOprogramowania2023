@@ -13,6 +13,7 @@ import {
 import DeleteModal from "src/components/shared/delete-dialog";
 import { getVisitHours } from "./form";
 import VisitFormDialog from "./visit-form-dialog";
+import { red } from "@mui/material/colors";
 interface Props {
   visit: Visit;
   allVisits: Visit[];
@@ -78,36 +79,38 @@ const VisitCard: React.FunctionComponent<Props> = ({
         marginBottom: "20px",
       }}
     >
-      <Link href={`dashboard/clients/profile/${visit.user.id}`}>
-        <Stack direction="row" alignItems={"center"}>
-          <Typography variant="h6" component="h6" fontWeight={700}>
-            {fullName}
+      <Link href={`dashboard/clients/profile/${visit.user.id}`} style={{textDecorationLine: "none", color:"black"}}>
+          <Stack direction="row" alignItems={"center"}>
+            <Typography variant="h6" component="h6" fontWeight={700}>
+              {fullName}
+            </Typography>
+          </Stack>
+        <Typography variant="body1" component="p">
+          {dayjs(visit.time_start).format("HH:mm")} -{" "}
+          {dayjs(visit.time_end).format("HH:mm")}
+        </Typography>
+        <Typography variant="body1" component="p" fontWeight={700}>
+          Usługa:{" "}
+          <Typography variant="body1" component="span">
+            {visit.service.name} ({visit.service.price}zł)
           </Typography>
-          <LaunchIcon />
-        </Stack>
+        </Typography>
+        <Typography variant="body1" component="p" fontWeight={700}>
+          Notatka:{" "}
+          <Typography variant="body1" component="span">
+            {visit.note}
+          </Typography>
+        </Typography>
+        <Typography variant="body1" component="p" fontWeight={700}>
+          Fryzjer :{" "}
+          <Typography variant="body1" component="span">
+            {employeeFullName}
+          </Typography>
+        </Typography>
+        <Typography align="right">    
+        <LaunchIcon />
+        </Typography>
       </Link>
-      <Typography variant="body1" component="p">
-        {dayjs(visit.time_start).format("HH:mm")} -{" "}
-        {dayjs(visit.time_end).format("HH:mm")}
-      </Typography>
-      <Typography variant="body1" component="p" fontWeight={700}>
-        Usługa:{" "}
-        <Typography variant="body1" component="span">
-          {visit.service.name} ({visit.service.price}zł)
-        </Typography>
-      </Typography>
-      <Typography variant="body1" component="p" fontWeight={700}>
-        Notatka:{" "}
-        <Typography variant="body1" component="span">
-          {visit.note}
-        </Typography>
-      </Typography>
-      <Typography variant="body1" component="p" fontWeight={700}>
-        Fryzjer :{" "}
-        <Typography variant="body1" component="span">
-          {employeeFullName}
-        </Typography>
-      </Typography>
       {!isVisitDone ? (
         <Stack
           direction="row"
@@ -117,15 +120,31 @@ const VisitCard: React.FunctionComponent<Props> = ({
           }}
         >
           <Button
-            variant="contained"
-            color="primary"
+            variant="text"
+            sx={{
+              color: "#C6A619",
+              marginTop: "20px",
+              '&:hover': {
+                color: "white",
+                backgroundColor: "#C6A619", 
+                borderColor: "#C6A619",
+              },
+            }}
             onClick={() => setEditVisitDialogOpen(true)}
           >
             Edytuj
           </Button>
           <Button
-            variant="contained"
-            color="error"
+            variant="text"
+            sx={{
+              color: "#B32222",
+              marginTop: "20px",
+              '&:hover': {
+                color: "white",
+                backgroundColor: "red", 
+                borderColor: "red",
+              },
+            }}
             onClick={() => setDeleteVisitDialogOpen(true)}
           >
             Usuń

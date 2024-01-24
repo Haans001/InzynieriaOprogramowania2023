@@ -59,7 +59,7 @@ const Services: React.FunctionComponent = () => {
       <Typography
         variant="h5"
         component="h5"
-        fontWeight={700}
+        fontWeight={300}
         sx={{
           marginBottom: "40px",
         }}
@@ -69,12 +69,16 @@ const Services: React.FunctionComponent = () => {
       {servicesCount > 0 ? (
         <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead
+            sx={{
+              backgroundColor: "#C6A619", 
+              fontStyle: "#FCF9EC",
+            }}
+            >
               <TableRow>
                 <TableCell>Nazwa usługi</TableCell>
                 <TableCell align="right">Czas wykonania</TableCell>
                 <TableCell align="right">Cena</TableCell>
-                <TableCell align="right">Edycja</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
@@ -95,10 +99,15 @@ const Services: React.FunctionComponent = () => {
       )}
       <Button
         variant="contained"
-        color="primary"
         onClick={() => setAddServiceDialogOpen(true)}
         sx={{
+          color: "white",
+          fontWeight: "400",
+          backgroundColor: "#C6A619",
           marginTop: "20px",
+          '&:hover': {
+            backgroundColor: "#857013", 
+          },
         }}
       >
         Dodaj usługę

@@ -154,10 +154,32 @@ const VisitFormDialog: React.FC<Props> = ({
                     marginTop: "20px",
                   }}
                 >
-                  <Button onClick={handleClose} type="button">
+                  <Button onClick={handleClose} type="button" variant="text"
+                    sx={{
+                      color: "#B32222",
+                      marginTop: "20px",
+                      '&:hover': {
+                        color: "white",
+                        backgroundColor: "red", 
+                        borderColor: "red",
+                      },
+                    }}
+                  >
                     Odrzuć
                   </Button>
-                  <Button type="submit">{submitButtonLabel}</Button>
+                  <Button type="submit" variant="text"
+                    sx={{
+                      color: "#C6A619",
+                      marginTop: "20px",
+                      '&:hover': {
+                        color: "white",
+                        backgroundColor: "#C6A619", 
+                        borderColor: "#C6A619",
+                      },
+                    }}
+                  >
+                    {submitButtonLabel}
+                  </Button>
                 </DialogActions>
               </Form>
             )}

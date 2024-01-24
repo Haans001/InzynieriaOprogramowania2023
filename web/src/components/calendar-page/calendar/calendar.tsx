@@ -16,7 +16,7 @@ const Calendar: React.FunctionComponent<Props> = ({ date, setDate }) => {
       <Typography
         variant="h5"
         component="h5"
-        fontWeight={700}
+        fontWeight={500}
         sx={{
           marginBottom: "40px",
         }}
@@ -29,7 +29,7 @@ const Calendar: React.FunctionComponent<Props> = ({ date, setDate }) => {
           margin: "auto",
         }}
       >
-        <DateCalendar value={date} onChange={setDate} />
+        <DateCalendar value={date} onChange={setDate}/>
       </Card>
     </LocalizationProvider>
   );

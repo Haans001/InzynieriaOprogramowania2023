@@ -25,7 +25,7 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
       <Typography
         variant="h5"
         component="h5"
-        fontWeight={700}
+        fontWeight={500}
         sx={{
           marginBottom: "40px",
         }}
@@ -139,8 +139,32 @@ const AddClientForm: React.FunctionComponent<Props> = ({}) => {
               marginTop: "20px",
             }}
           >
-            <Button type="reset">Odrzuć</Button>
-            <Button variant="contained" type="submit">
+            <Button type="reset"
+              sx={{
+                fontWeight: "400",
+                color: "#FCF9EC",
+                backgroundColor: "#B32222",
+                marginTop: "20px",
+                '&:hover': {
+                  backgroundColor: "red", 
+                },
+              }}
+            >
+              Odrzuć
+            </Button>
+            <Button 
+              variant="contained" 
+              type="submit"
+              sx={{
+                color: "#FCF9EC",
+                backgroundColor: "#C6A619",
+                fontWeight: "400",
+                marginTop: "20px",
+                '&:hover': {
+                  backgroundColor: "#167014", 
+                },
+              }}
+            >
               Dodaj klienta
             </Button>
           </Stack>

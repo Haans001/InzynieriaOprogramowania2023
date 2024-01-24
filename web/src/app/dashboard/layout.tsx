@@ -1,7 +1,8 @@
 import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ChairIcon from "@mui/icons-material/Chair";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import ContentCutIcon from '@mui/icons-material/ContentCut';
+import PeopleIcon from '@mui/icons-material/People';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,15 +19,17 @@ import Link from "next/link";
 import * as React from "react";
 import AccountMenu from "src/components/layout/account-menu";
 import { ZIndex } from "src/utils/zIndex";
+import logo from "./logo.png"
+import Image from 'next/image';
 
 const DRAWER_WIDTH = 240;
 
 const LINKS = [
   { text: "Kalendarz wizyt", href: "/dashboard", icon: CalendarMonthIcon },
-  { text: "Klienci", href: "/dashboard/clients", icon: ChairIcon },
+  { text: "Klienci", href: "/dashboard/clients", icon: PeopleIcon },
   { text: "Fryzjerzy", href: "/dashboard/employees", icon: BadgeIcon },
-  { text: "Usługi", href: "/dashboard/services", icon: DashboardIcon },
-  { text: "Magazyn", href: "/dashboard/products", icon: DashboardIcon },
+  { text: "Usługi", href: "/dashboard/services", icon: ContentCutIcon },
+  { text: "Magazyn", href: "/dashboard/products", icon: StorefrontIcon },
 ];
 
 export default function DashboardLayout({
@@ -37,10 +40,7 @@ export default function DashboardLayout({
   return (
     <>
       <AppBar position="fixed" sx={{ zIndex: ZIndex.APP_BAR }}>
-        <Toolbar sx={{ backgroundColor: "background.paper" }}>
-          <DashboardIcon
-            sx={{ color: "#444", mr: 2, transform: "translateY(-2px)" }}
-          />
+        <Toolbar sx={{ backgroundColor: "#F4F4F4" }}>
           <Stack
             justifyContent="space-between"
             alignItems="center"
@@ -49,9 +49,7 @@ export default function DashboardLayout({
               width: "100%",
             }}
           >
-            <Typography variant="h6" color="text.primary">
-              Kleopatra - Salon Fryzjerski
-            </Typography>
+            <Image src={logo.src} alt="logo aplikacji" width={150} height={100} /> 
             <AccountMenu />
           </Stack>
         </Toolbar>
@@ -63,9 +61,10 @@ export default function DashboardLayout({
           "& .MuiDrawer-paper": {
             width: DRAWER_WIDTH,
             boxSizing: "border-box",
-            top: ["48px", "56px", "64px"],
+            top: ["75px", "83px", "91px"],
             height: "auto",
             bottom: 0,
+            backgroundColor: "#FCFCFC",
           },
         }}
         variant="permanent"
@@ -92,7 +91,7 @@ export default function DashboardLayout({
           flexGrow: 1,
           bgcolor: "background.default",
           ml: `${DRAWER_WIDTH}px`,
-          mt: ["48px", "56px", "64px"],
+          mt: ["70px", "78px", "86px"],
           p: 3,
         }}
       >

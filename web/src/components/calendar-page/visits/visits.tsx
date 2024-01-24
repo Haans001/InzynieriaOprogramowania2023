@@ -58,7 +58,7 @@ const Visits: React.FunctionComponent<Props> = ({ date }) => {
       <Typography
         variant="h5"
         component="h5"
-        fontWeight={700}
+        fontWeight={500}
         sx={{
           marginBottom: "40px",
         }}
@@ -89,8 +89,15 @@ const Visits: React.FunctionComponent<Props> = ({ date }) => {
         {!isDayFromPast && (
           <Button
             variant="contained"
-            color="primary"
             onClick={() => setAddVisitDialogOpen(true)}
+            sx={{
+              color: "#FCF9EC",
+              backgroundColor: "#C6A619",
+              marginTop: "20px",
+              '&:hover': {
+                backgroundColor: "#857013", 
+              },
+            }}
           >
             Dodaj wizytę
           </Button>
