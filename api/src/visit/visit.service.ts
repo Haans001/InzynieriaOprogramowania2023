@@ -53,11 +53,11 @@ export class VisitService {
           <p>Dziękujemy za skorzystanie z usług Salonu Fryzjerskiego Kleopatra. Czekamy na Ciebie!</p>
         `;
 
-    // await this.emailService.sendEmail(
-    //   'Potwierdzenie Wizyty w Salonie Fryzjerskim Kleopatra',
-    //   emailTemplate,
-    //   user.email,
-    // );
+    await this.emailService.sendEmail(
+      'Potwierdzenie Wizyty w Salonie Fryzjerskim Kleopatra',
+      emailTemplate,
+      user.email,
+    );
 
     return result;
   }
